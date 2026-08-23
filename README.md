@@ -1,4 +1,4 @@
-# TRACE final deployment runtime
+# ECG CDSS
 
 This folder is the deployment-only entry point for the selected TRACE system:
 
