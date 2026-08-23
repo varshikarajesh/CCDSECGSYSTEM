@@ -1,0 +1,31 @@
+# TRACE inference-only dependencies for Jetson Orin Nano (JetPack 6 / Python 3.10).
+# Install NVIDIA's JetPack-compatible PyTorch wheel first; do not replace it
+# with the generic PyPI CPU wheel.
+
+numpy>=1.26,<3
+scipy>=1.11,<2
+PyYAML>=6.0,<7
+safetensors>=0.4,<1
+wfdb>=4.1,<5
+pandas>=2.2,<3
+fastapi>=0.115,<1
+uvicorn[standard]>=0.30,<1
+python-multipart>=0.0.9,<1
+pydantic>=2.7,<3
+streamlit>=1.40,<2
+requests>=2.31,<3
+plotly>=5.24,<7
+
+# Jetson notes:
+# - Install torch/torchvision from NVIDIA's JetPack wheel repository.
+# - FAISS often requires an aarch64/JetPack wheel or local CUDA build. The
+#   runtime imports module `faiss` and was verified with API version 1.14.3.
+# - A generic PyPI llama-cpp-python wheel may be CPU-only. This deployment
+#   deliberately refuses real Gemma inference unless CUDA offload is present.
+#   Build it with: CMAKE_ARGS="-DGGML_CUDA=on" FORCE_CMAKE=1
+#   pip install --no-cache-dir --force-reinstall llama-cpp-python.
+llama-cpp-python>=0.3.34,<0.4
+
+# These declarations document required modules. On aarch64, use the matching
+# NVIDIA/community wheels when PyPI does not offer a compatible binary.
+faiss-cpu>=1.7.4

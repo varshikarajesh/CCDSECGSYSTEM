@@ -1,0 +1,1082 @@
+{
+  "NDT": {
+    "description": "non-diagnostic T abnormalities",
+    "diagnostic_class": "STTC",
+    "statement_category": "other ST-T descriptive statements",
+    "canonical_name": "Non-diagnostic T abnormalities",
+    "relationships": {
+      "DIG": "differential_only",
+      "NST_": "related_pattern",
+      "LNGQT": "related_pattern",
+      "ISC_": "related_pattern",
+      "ISCAL": "related_pattern",
+      "ISCIN": "related_pattern",
+      "ISCIL": "related_pattern",
+      "ISCAS": "related_pattern",
+      "ISCLA": "related_pattern",
+      "ANEUR": "related_pattern",
+      "EL": "related_pattern",
+      "ISCAN": "related_pattern"
+    }
+  },
+  "NST_": {
+    "description": "non-specific ST changes",
+    "diagnostic_class": "STTC",
+    "statement_category": "Basic roots for coding ST-T changes and abnormalities",
+    "canonical_name": "Non-specific ST changes",
+    "relationships": {
+      "DIG": "differential_only",
+      "NDT": "related_pattern",
+      "LNGQT": "related_pattern",
+      "ISC_": "related_pattern",
+      "ISCAL": "related_pattern",
+      "ISCIN": "related_pattern",
+      "ISCIL": "related_pattern",
+      "ISCAS": "related_pattern",
+      "ISCLA": "related_pattern",
+      "ANEUR": "related_pattern",
+      "EL": "related_pattern",
+      "ISCAN": "related_pattern"
+    }
+  },
+  "DIG": {
+    "description": "digitalis-effect",
+    "diagnostic_class": "STTC",
+    "statement_category": "other ST-T descriptive statements",
+    "canonical_name": "Digitalis-effect",
+    "relationships": {
+      "DIG": "differential_only",
+      "NDT": "related_pattern",
+      "NST_": "related_pattern",
+      "LNGQT": "related_pattern",
+      "ISC_": "related_pattern",
+      "ISCAL": "related_pattern",
+      "ISCIN": "related_pattern",
+      "ISCIL": "related_pattern",
+      "ISCAS": "related_pattern",
+      "ISCLA": "related_pattern",
+      "ANEUR": "related_pattern",
+      "EL": "related_pattern",
+      "ISCAN": "related_pattern"
+    }
+  },
+  "LNGQT": {
+    "description": "long QT-interval",
+    "diagnostic_class": "STTC",
+    "statement_category": "other ST-T descriptive statements",
+    "canonical_name": "Long QT-interval",
+    "relationships": {
+      "DIG": "differential_only",
+      "NDT": "related_pattern",
+      "NST_": "related_pattern",
+      "ISC_": "related_pattern",
+      "ISCAL": "related_pattern",
+      "ISCIN": "related_pattern",
+      "ISCIL": "related_pattern",
+      "ISCAS": "related_pattern",
+      "ISCLA": "related_pattern",
+      "ANEUR": "related_pattern",
+      "EL": "related_pattern",
+      "ISCAN": "related_pattern"
+    }
+  },
+  "NORM": {
+    "description": "normal ECG",
+    "diagnostic_class": "NORM",
+    "statement_category": "Normal/abnormal",
+    "canonical_name": "Normal ECG",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  },
+  "IMI": {
+    "description": "inferior myocardial infarction",
+    "diagnostic_class": "MI",
+    "statement_category": "Myocardial Infarction",
+    "canonical_name": "Inferior myocardial infarction",
+    "relationships": {
+      "ASMI": "related_pattern",
+      "ILMI": "related_pattern",
+      "AMI": "related_pattern",
+      "ALMI": "related_pattern",
+      "INJAS": "related_pattern",
+      "LMI": "related_pattern",
+      "INJAL": "related_pattern",
+      "IPLMI": "related_pattern",
+      "IPMI": "related_pattern",
+      "INJIN": "related_pattern",
+      "INJLA": "related_pattern",
+      "PMI": "related_pattern",
+      "INJIL": "related_pattern"
+    }
+  },
+  "ASMI": {
+    "description": "anteroseptal myocardial infarction",
+    "diagnostic_class": "MI",
+    "statement_category": "Myocardial Infarction",
+    "canonical_name": "Anteroseptal myocardial infarction",
+    "relationships": {
+      "IMI": "related_pattern",
+      "ILMI": "related_pattern",
+      "AMI": "related_pattern",
+      "ALMI": "related_pattern",
+      "INJAS": "related_pattern",
+      "LMI": "related_pattern",
+      "INJAL": "related_pattern",
+      "IPLMI": "related_pattern",
+      "IPMI": "related_pattern",
+      "INJIN": "related_pattern",
+      "INJLA": "related_pattern",
+      "PMI": "related_pattern",
+      "INJIL": "related_pattern"
+    }
+  },
+  "LVH": {
+    "description": "left ventricular hypertrophy",
+    "diagnostic_class": "HYP",
+    "statement_category": "Ventricular Hypertrophy",
+    "canonical_name": "Left ventricular hypertrophy",
+    "relationships": {
+      "IMI": "differential_only",
+      "LAO/LAE": "related_pattern",
+      "RVH": "related_pattern",
+      "RAO/RAE": "related_pattern",
+      "SEHYP": "related_pattern"
+    }
+  },
+  "LAFB": {
+    "description": "left anterior fascicular block",
+    "diagnostic_class": "CD",
+    "statement_category": "Intraventricular and intra-atrial Conduction disturbances",
+    "canonical_name": "Left anterior fascicular block",
+    "relationships": {
+      "EL": "differential_only",
+      "IRBBB": "related_pattern",
+      "1AVB": "related_pattern",
+      "IVCD": "related_pattern",
+      "CRBBB": "related_pattern",
+      "CLBBB": "related_pattern",
+      "LPFB": "related_pattern",
+      "WPW": "related_pattern",
+      "ILBBB": "related_pattern",
+      "3AVB": "related_pattern",
+      "2AVB": "related_pattern"
+    }
+  },
+  "ISC_": {
+    "description": "non-specific ischemic",
+    "diagnostic_class": "STTC",
+    "statement_category": "Basic roots for coding ST-T changes and abnormalities",
+    "canonical_name": "Non-specific ischemic",
+    "relationships": {
+      "DIG": "differential_only",
+      "NDT": "related_pattern",
+      "NST_": "related_pattern",
+      "LNGQT": "related_pattern",
+      "ISCAL": "related_pattern",
+      "ISCIN": "related_pattern",
+      "ISCIL": "related_pattern",
+      "ISCAS": "related_pattern",
+      "ISCLA": "related_pattern",
+      "ANEUR": "related_pattern",
+      "EL": "related_pattern",
+      "ISCAN": "related_pattern"
+    }
+  },
+  "IRBBB": {
+    "description": "incomplete right bundle branch block",
+    "diagnostic_class": "CD",
+    "statement_category": "Intraventricular and intra-atrial Conduction disturbances",
+    "canonical_name": "Incomplete right bundle branch block",
+    "relationships": {
+      "EL": "differential_only",
+      "LAFB": "related_pattern",
+      "1AVB": "related_pattern",
+      "IVCD": "related_pattern",
+      "CRBBB": "related_pattern",
+      "CLBBB": "related_pattern",
+      "LPFB": "related_pattern",
+      "WPW": "related_pattern",
+      "ILBBB": "related_pattern",
+      "3AVB": "related_pattern",
+      "2AVB": "related_pattern"
+    }
+  },
+  "1AVB": {
+    "description": "first degree AV block",
+    "diagnostic_class": "CD",
+    "statement_category": "Sinus node dysfunction, atrial and AV-conduction defects",
+    "canonical_name": "First-degree atrioventricular block",
+    "relationships": {
+      "EL": "differential_only",
+      "LAFB": "related_pattern",
+      "IRBBB": "related_pattern",
+      "IVCD": "related_pattern",
+      "CRBBB": "related_pattern",
+      "CLBBB": "related_pattern",
+      "LPFB": "related_pattern",
+      "WPW": "related_pattern",
+      "ILBBB": "related_pattern",
+      "3AVB": "related_pattern",
+      "2AVB": "related_pattern"
+    }
+  },
+  "IVCD": {
+    "description": "non-specific intraventricular conduction disturbance (block)",
+    "diagnostic_class": "CD",
+    "statement_category": "Intraventricular and intra-atrial Conduction disturbances",
+    "canonical_name": "Non-specific intraventricular conduction disturbance (block)",
+    "relationships": {
+      "EL": "differential_only",
+      "LAFB": "related_pattern",
+      "IRBBB": "related_pattern",
+      "1AVB": "related_pattern",
+      "CRBBB": "related_pattern",
+      "CLBBB": "related_pattern",
+      "LPFB": "related_pattern",
+      "WPW": "related_pattern",
+      "ILBBB": "related_pattern",
+      "3AVB": "related_pattern",
+      "2AVB": "related_pattern"
+    }
+  },
+  "ISCAL": {
+    "description": "ischemic in anterolateral leads",
+    "diagnostic_class": "STTC",
+    "statement_category": "ischemic ST-T changes",
+    "canonical_name": "Ischemic in anterolateral leads",
+    "relationships": {
+      "DIG": "differential_only",
+      "NDT": "related_pattern",
+      "NST_": "related_pattern",
+      "LNGQT": "related_pattern",
+      "ISC_": "related_pattern",
+      "ISCIN": "related_pattern",
+      "ISCIL": "related_pattern",
+      "ISCAS": "related_pattern",
+      "ISCLA": "related_pattern",
+      "ANEUR": "related_pattern",
+      "EL": "related_pattern",
+      "ISCAN": "related_pattern"
+    }
+  },
+  "CRBBB": {
+    "description": "complete right bundle branch block",
+    "diagnostic_class": "CD",
+    "statement_category": "Intraventricular and intra-atrial Conduction disturbances",
+    "canonical_name": "Complete right bundle branch block",
+    "relationships": {
+      "EL": "differential_only",
+      "LAFB": "related_pattern",
+      "IRBBB": "related_pattern",
+      "1AVB": "related_pattern",
+      "IVCD": "related_pattern",
+      "CLBBB": "related_pattern",
+      "LPFB": "related_pattern",
+      "WPW": "related_pattern",
+      "ILBBB": "related_pattern",
+      "3AVB": "related_pattern",
+      "2AVB": "related_pattern"
+    }
+  },
+  "CLBBB": {
+    "description": "complete left bundle branch block",
+    "diagnostic_class": "CD",
+    "statement_category": "Intraventricular and intra-atrial Conduction disturbances",
+    "canonical_name": "Complete left bundle branch block",
+    "relationships": {
+      "EL": "differential_only",
+      "LAFB": "related_pattern",
+      "IRBBB": "related_pattern",
+      "1AVB": "related_pattern",
+      "IVCD": "related_pattern",
+      "CRBBB": "related_pattern",
+      "LPFB": "related_pattern",
+      "WPW": "related_pattern",
+      "ILBBB": "related_pattern",
+      "3AVB": "related_pattern",
+      "2AVB": "related_pattern"
+    }
+  },
+  "ILMI": {
+    "description": "inferolateral myocardial infarction",
+    "diagnostic_class": "MI",
+    "statement_category": "Myocardial Infarction",
+    "canonical_name": "Inferolateral myocardial infarction",
+    "relationships": {
+      "IMI": "related_pattern",
+      "ASMI": "related_pattern",
+      "AMI": "related_pattern",
+      "ALMI": "related_pattern",
+      "INJAS": "related_pattern",
+      "LMI": "related_pattern",
+      "INJAL": "related_pattern",
+      "IPLMI": "related_pattern",
+      "IPMI": "related_pattern",
+      "INJIN": "related_pattern",
+      "INJLA": "related_pattern",
+      "PMI": "related_pattern",
+      "INJIL": "related_pattern"
+    }
+  },
+  "LAO/LAE": {
+    "description": "left atrial overload/enlargement",
+    "diagnostic_class": "HYP",
+    "statement_category": "Atrial statements",
+    "canonical_name": "Left atrial overload/enlargement",
+    "relationships": {
+      "IMI": "differential_only",
+      "LVH": "related_pattern",
+      "RVH": "related_pattern",
+      "RAO/RAE": "related_pattern",
+      "SEHYP": "related_pattern"
+    }
+  },
+  "AMI": {
+    "description": "anterior myocardial infarction",
+    "diagnostic_class": "MI",
+    "statement_category": "Myocardial Infarction",
+    "canonical_name": "Anterior myocardial infarction",
+    "relationships": {
+      "IMI": "related_pattern",
+      "ASMI": "related_pattern",
+      "ILMI": "related_pattern",
+      "ALMI": "related_pattern",
+      "INJAS": "related_pattern",
+      "LMI": "related_pattern",
+      "INJAL": "related_pattern",
+      "IPLMI": "related_pattern",
+      "IPMI": "related_pattern",
+      "INJIN": "related_pattern",
+      "INJLA": "related_pattern",
+      "PMI": "related_pattern",
+      "INJIL": "related_pattern"
+    }
+  },
+  "ALMI": {
+    "description": "anterolateral myocardial infarction",
+    "diagnostic_class": "MI",
+    "statement_category": "Myocardial Infarction",
+    "canonical_name": "Anterolateral myocardial infarction",
+    "relationships": {
+      "IMI": "related_pattern",
+      "ASMI": "related_pattern",
+      "ILMI": "related_pattern",
+      "AMI": "related_pattern",
+      "INJAS": "related_pattern",
+      "LMI": "related_pattern",
+      "INJAL": "related_pattern",
+      "IPLMI": "related_pattern",
+      "IPMI": "related_pattern",
+      "INJIN": "related_pattern",
+      "INJLA": "related_pattern",
+      "PMI": "related_pattern",
+      "INJIL": "related_pattern"
+    }
+  },
+  "ISCIN": {
+    "description": "ischemic in inferior leads",
+    "diagnostic_class": "STTC",
+    "statement_category": "ischemic ST-T changes",
+    "canonical_name": "Ischemic in inferior leads",
+    "relationships": {
+      "DIG": "differential_only",
+      "NDT": "related_pattern",
+      "NST_": "related_pattern",
+      "LNGQT": "related_pattern",
+      "ISC_": "related_pattern",
+      "ISCAL": "related_pattern",
+      "ISCIL": "related_pattern",
+      "ISCAS": "related_pattern",
+      "ISCLA": "related_pattern",
+      "ANEUR": "related_pattern",
+      "EL": "related_pattern",
+      "ISCAN": "related_pattern"
+    }
+  },
+  "INJAS": {
+    "description": "subendocardial injury in anteroseptal leads",
+    "diagnostic_class": "MI",
+    "statement_category": "ischemic ST-T changes compatible with subendocardial injury",
+    "canonical_name": "Subendocardial injury in anteroseptal leads",
+    "relationships": {
+      "IMI": "related_pattern",
+      "ASMI": "related_pattern",
+      "ILMI": "related_pattern",
+      "AMI": "related_pattern",
+      "ALMI": "related_pattern",
+      "LMI": "related_pattern",
+      "INJAL": "related_pattern",
+      "IPLMI": "related_pattern",
+      "IPMI": "related_pattern",
+      "INJIN": "related_pattern",
+      "INJLA": "related_pattern",
+      "PMI": "related_pattern",
+      "INJIL": "related_pattern"
+    }
+  },
+  "LMI": {
+    "description": "lateral myocardial infarction",
+    "diagnostic_class": "MI",
+    "statement_category": "Myocardial Infarction",
+    "canonical_name": "Lateral myocardial infarction",
+    "relationships": {
+      "IMI": "related_pattern",
+      "ASMI": "related_pattern",
+      "ILMI": "related_pattern",
+      "AMI": "related_pattern",
+      "ALMI": "related_pattern",
+      "INJAS": "related_pattern",
+      "INJAL": "related_pattern",
+      "IPLMI": "related_pattern",
+      "IPMI": "related_pattern",
+      "INJIN": "related_pattern",
+      "INJLA": "related_pattern",
+      "PMI": "related_pattern",
+      "INJIL": "related_pattern"
+    }
+  },
+  "ISCIL": {
+    "description": "ischemic in inferolateral leads",
+    "diagnostic_class": "STTC",
+    "statement_category": "ischemic ST-T changes",
+    "canonical_name": "Ischemic in inferolateral leads",
+    "relationships": {
+      "DIG": "differential_only",
+      "NDT": "related_pattern",
+      "NST_": "related_pattern",
+      "LNGQT": "related_pattern",
+      "ISC_": "related_pattern",
+      "ISCAL": "related_pattern",
+      "ISCIN": "related_pattern",
+      "ISCAS": "related_pattern",
+      "ISCLA": "related_pattern",
+      "ANEUR": "related_pattern",
+      "EL": "related_pattern",
+      "ISCAN": "related_pattern"
+    }
+  },
+  "LPFB": {
+    "description": "left posterior fascicular block",
+    "diagnostic_class": "CD",
+    "statement_category": "Intraventricular and intra-atrial Conduction disturbances",
+    "canonical_name": "Left posterior fascicular block",
+    "relationships": {
+      "EL": "differential_only",
+      "LAFB": "related_pattern",
+      "IRBBB": "related_pattern",
+      "1AVB": "related_pattern",
+      "IVCD": "related_pattern",
+      "CRBBB": "related_pattern",
+      "CLBBB": "related_pattern",
+      "WPW": "related_pattern",
+      "ILBBB": "related_pattern",
+      "3AVB": "related_pattern",
+      "2AVB": "related_pattern"
+    }
+  },
+  "ISCAS": {
+    "description": "ischemic in anteroseptal leads",
+    "diagnostic_class": "STTC",
+    "statement_category": "ischemic ST-T changes",
+    "canonical_name": "Ischemic in anteroseptal leads",
+    "relationships": {
+      "DIG": "differential_only",
+      "NDT": "related_pattern",
+      "NST_": "related_pattern",
+      "LNGQT": "related_pattern",
+      "ISC_": "related_pattern",
+      "ISCAL": "related_pattern",
+      "ISCIN": "related_pattern",
+      "ISCIL": "related_pattern",
+      "ISCLA": "related_pattern",
+      "ANEUR": "related_pattern",
+      "EL": "related_pattern",
+      "ISCAN": "related_pattern"
+    }
+  },
+  "INJAL": {
+    "description": "subendocardial injury in anterolateral leads",
+    "diagnostic_class": "MI",
+    "statement_category": "ischemic ST-T changes compatible with subendocardial injury",
+    "canonical_name": "Subendocardial injury in anterolateral leads",
+    "relationships": {
+      "IMI": "related_pattern",
+      "ASMI": "related_pattern",
+      "ILMI": "related_pattern",
+      "AMI": "related_pattern",
+      "ALMI": "related_pattern",
+      "INJAS": "related_pattern",
+      "LMI": "related_pattern",
+      "IPLMI": "related_pattern",
+      "IPMI": "related_pattern",
+      "INJIN": "related_pattern",
+      "INJLA": "related_pattern",
+      "PMI": "related_pattern",
+      "INJIL": "related_pattern"
+    }
+  },
+  "ISCLA": {
+    "description": "ischemic in lateral leads",
+    "diagnostic_class": "STTC",
+    "statement_category": "ischemic ST-T changes",
+    "canonical_name": "Ischemic in lateral leads",
+    "relationships": {
+      "DIG": "differential_only",
+      "NDT": "related_pattern",
+      "NST_": "related_pattern",
+      "LNGQT": "related_pattern",
+      "ISC_": "related_pattern",
+      "ISCAL": "related_pattern",
+      "ISCIN": "related_pattern",
+      "ISCIL": "related_pattern",
+      "ISCAS": "related_pattern",
+      "ANEUR": "related_pattern",
+      "EL": "related_pattern",
+      "ISCAN": "related_pattern"
+    }
+  },
+  "RVH": {
+    "description": "right ventricular hypertrophy",
+    "diagnostic_class": "HYP",
+    "statement_category": "Ventricular Hypertrophy",
+    "canonical_name": "Right ventricular hypertrophy",
+    "relationships": {
+      "IMI": "differential_only",
+      "LVH": "related_pattern",
+      "LAO/LAE": "related_pattern",
+      "RAO/RAE": "related_pattern",
+      "SEHYP": "related_pattern"
+    }
+  },
+  "ANEUR": {
+    "description": "ST-T changes compatible with ventricular aneurysm",
+    "diagnostic_class": "STTC",
+    "statement_category": "other ST-T descriptive statements",
+    "canonical_name": "ST-T changes compatible with ventricular aneurysm",
+    "relationships": {
+      "DIG": "differential_only",
+      "NDT": "related_pattern",
+      "NST_": "related_pattern",
+      "LNGQT": "related_pattern",
+      "ISC_": "related_pattern",
+      "ISCAL": "related_pattern",
+      "ISCIN": "related_pattern",
+      "ISCIL": "related_pattern",
+      "ISCAS": "related_pattern",
+      "ISCLA": "related_pattern",
+      "EL": "related_pattern",
+      "ISCAN": "related_pattern"
+    }
+  },
+  "RAO/RAE": {
+    "description": "right atrial overload/enlargement",
+    "diagnostic_class": "HYP",
+    "statement_category": "Atrial statements",
+    "canonical_name": "Right atrial overload/enlargement",
+    "relationships": {
+      "IMI": "differential_only",
+      "LVH": "related_pattern",
+      "LAO/LAE": "related_pattern",
+      "RVH": "related_pattern",
+      "SEHYP": "related_pattern"
+    }
+  },
+  "EL": {
+    "description": "electrolytic disturbance or drug (former EDIS)",
+    "diagnostic_class": "STTC",
+    "statement_category": "physiopathological nature of ST-T changes",
+    "canonical_name": "Electrolytic disturbance or drug (former EDIS)",
+    "relationships": {
+      "DIG": "differential_only",
+      "NDT": "related_pattern",
+      "NST_": "related_pattern",
+      "LNGQT": "related_pattern",
+      "ISC_": "related_pattern",
+      "ISCAL": "related_pattern",
+      "ISCIN": "related_pattern",
+      "ISCIL": "related_pattern",
+      "ISCAS": "related_pattern",
+      "ISCLA": "related_pattern",
+      "ANEUR": "related_pattern",
+      "ISCAN": "related_pattern"
+    }
+  },
+  "WPW": {
+    "description": "Wolf-Parkinson-White syndrome",
+    "diagnostic_class": "CD",
+    "statement_category": "Intraventricular and intra-atrial Conduction disturbances",
+    "canonical_name": "Wolf-Parkinson-White syndrome",
+    "relationships": {
+      "IRBBB": "differential_only",
+      "CRBBB": "differential_only",
+      "CLBBB": "differential_only",
+      "ILBBB": "differential_only",
+      "LAFB": "related_pattern",
+      "1AVB": "related_pattern",
+      "IVCD": "related_pattern",
+      "LPFB": "related_pattern",
+      "3AVB": "related_pattern",
+      "2AVB": "related_pattern"
+    }
+  },
+  "ILBBB": {
+    "description": "incomplete left bundle branch block",
+    "diagnostic_class": "CD",
+    "statement_category": "Intraventricular and intra-atrial Conduction disturbances",
+    "canonical_name": "Incomplete left bundle branch block",
+    "relationships": {
+      "EL": "differential_only",
+      "LAFB": "related_pattern",
+      "IRBBB": "related_pattern",
+      "1AVB": "related_pattern",
+      "IVCD": "related_pattern",
+      "CRBBB": "related_pattern",
+      "CLBBB": "related_pattern",
+      "LPFB": "related_pattern",
+      "WPW": "related_pattern",
+      "3AVB": "related_pattern",
+      "2AVB": "related_pattern"
+    }
+  },
+  "IPLMI": {
+    "description": "inferoposterolateral myocardial infarction",
+    "diagnostic_class": "MI",
+    "statement_category": "Myocardial Infarction",
+    "canonical_name": "Inferoposterolateral myocardial infarction",
+    "relationships": {
+      "IMI": "related_pattern",
+      "ASMI": "related_pattern",
+      "ILMI": "related_pattern",
+      "AMI": "related_pattern",
+      "ALMI": "related_pattern",
+      "INJAS": "related_pattern",
+      "LMI": "related_pattern",
+      "INJAL": "related_pattern",
+      "IPMI": "related_pattern",
+      "INJIN": "related_pattern",
+      "INJLA": "related_pattern",
+      "PMI": "related_pattern",
+      "INJIL": "related_pattern"
+    }
+  },
+  "ISCAN": {
+    "description": "ischemic in anterior leads",
+    "diagnostic_class": "STTC",
+    "statement_category": "ischemic ST-T changes",
+    "canonical_name": "Ischemic in anterior leads",
+    "relationships": {
+      "DIG": "differential_only",
+      "NDT": "related_pattern",
+      "NST_": "related_pattern",
+      "LNGQT": "related_pattern",
+      "ISC_": "related_pattern",
+      "ISCAL": "related_pattern",
+      "ISCIN": "related_pattern",
+      "ISCIL": "related_pattern",
+      "ISCAS": "related_pattern",
+      "ISCLA": "related_pattern",
+      "ANEUR": "related_pattern",
+      "EL": "related_pattern"
+    }
+  },
+  "IPMI": {
+    "description": "inferoposterior myocardial infarction",
+    "diagnostic_class": "MI",
+    "statement_category": "Myocardial Infarction",
+    "canonical_name": "Inferoposterior myocardial infarction",
+    "relationships": {
+      "IMI": "related_pattern",
+      "ASMI": "related_pattern",
+      "ILMI": "related_pattern",
+      "AMI": "related_pattern",
+      "ALMI": "related_pattern",
+      "INJAS": "related_pattern",
+      "LMI": "related_pattern",
+      "INJAL": "related_pattern",
+      "IPLMI": "related_pattern",
+      "INJIN": "related_pattern",
+      "INJLA": "related_pattern",
+      "PMI": "related_pattern",
+      "INJIL": "related_pattern"
+    }
+  },
+  "SEHYP": {
+    "description": "septal hypertrophy",
+    "diagnostic_class": "HYP",
+    "statement_category": "Ventricular Hypertrophy",
+    "canonical_name": "Septal hypertrophy",
+    "relationships": {
+      "IMI": "differential_only",
+      "LVH": "related_pattern",
+      "LAO/LAE": "related_pattern",
+      "RVH": "related_pattern",
+      "RAO/RAE": "related_pattern"
+    }
+  },
+  "INJIN": {
+    "description": "subendocardial injury in inferior leads",
+    "diagnostic_class": "MI",
+    "statement_category": "ischemic ST-T changes compatible with subendocardial injury",
+    "canonical_name": "Subendocardial injury in inferior leads",
+    "relationships": {
+      "IMI": "related_pattern",
+      "ASMI": "related_pattern",
+      "ILMI": "related_pattern",
+      "AMI": "related_pattern",
+      "ALMI": "related_pattern",
+      "INJAS": "related_pattern",
+      "LMI": "related_pattern",
+      "INJAL": "related_pattern",
+      "IPLMI": "related_pattern",
+      "IPMI": "related_pattern",
+      "INJLA": "related_pattern",
+      "PMI": "related_pattern",
+      "INJIL": "related_pattern"
+    }
+  },
+  "INJLA": {
+    "description": "subendocardial injury in lateral leads",
+    "diagnostic_class": "MI",
+    "statement_category": "ischemic ST-T changes compatible with subendocardial injury",
+    "canonical_name": "Subendocardial injury in lateral leads",
+    "relationships": {
+      "IMI": "related_pattern",
+      "ASMI": "related_pattern",
+      "ILMI": "related_pattern",
+      "AMI": "related_pattern",
+      "ALMI": "related_pattern",
+      "INJAS": "related_pattern",
+      "LMI": "related_pattern",
+      "INJAL": "related_pattern",
+      "IPLMI": "related_pattern",
+      "IPMI": "related_pattern",
+      "INJIN": "related_pattern",
+      "PMI": "related_pattern",
+      "INJIL": "related_pattern"
+    }
+  },
+  "PMI": {
+    "description": "posterior myocardial infarction",
+    "diagnostic_class": "MI",
+    "statement_category": "Myocardial Infarction",
+    "canonical_name": "Posterior myocardial infarction",
+    "relationships": {
+      "IMI": "related_pattern",
+      "ASMI": "related_pattern",
+      "ILMI": "related_pattern",
+      "AMI": "related_pattern",
+      "ALMI": "related_pattern",
+      "INJAS": "related_pattern",
+      "LMI": "related_pattern",
+      "INJAL": "related_pattern",
+      "IPLMI": "related_pattern",
+      "IPMI": "related_pattern",
+      "INJIN": "related_pattern",
+      "INJLA": "related_pattern",
+      "INJIL": "related_pattern"
+    }
+  },
+  "3AVB": {
+    "description": "third degree AV block",
+    "diagnostic_class": "CD",
+    "statement_category": "Sinus node dysfunction, atrial and AV-conduction defects",
+    "canonical_name": "Third degree AV block",
+    "relationships": {
+      "EL": "differential_only",
+      "LAFB": "related_pattern",
+      "IRBBB": "related_pattern",
+      "1AVB": "related_pattern",
+      "IVCD": "related_pattern",
+      "CRBBB": "related_pattern",
+      "CLBBB": "related_pattern",
+      "LPFB": "related_pattern",
+      "WPW": "related_pattern",
+      "ILBBB": "related_pattern",
+      "2AVB": "related_pattern"
+    }
+  },
+  "INJIL": {
+    "description": "subendocardial injury in inferolateral leads",
+    "diagnostic_class": "MI",
+    "statement_category": "ischemic ST-T changes compatible with subendocardial injury",
+    "canonical_name": "Subendocardial injury in inferolateral leads",
+    "relationships": {
+      "IMI": "related_pattern",
+      "ASMI": "related_pattern",
+      "ILMI": "related_pattern",
+      "AMI": "related_pattern",
+      "ALMI": "related_pattern",
+      "INJAS": "related_pattern",
+      "LMI": "related_pattern",
+      "INJAL": "related_pattern",
+      "IPLMI": "related_pattern",
+      "IPMI": "related_pattern",
+      "INJIN": "related_pattern",
+      "INJLA": "related_pattern",
+      "PMI": "related_pattern"
+    }
+  },
+  "2AVB": {
+    "description": "second degree AV block",
+    "diagnostic_class": "CD",
+    "statement_category": "Sinus node dysfunction, atrial and AV-conduction defects",
+    "canonical_name": "Second degree AV block",
+    "relationships": {
+      "EL": "differential_only",
+      "LAFB": "related_pattern",
+      "IRBBB": "related_pattern",
+      "1AVB": "related_pattern",
+      "IVCD": "related_pattern",
+      "CRBBB": "related_pattern",
+      "CLBBB": "related_pattern",
+      "LPFB": "related_pattern",
+      "WPW": "related_pattern",
+      "ILBBB": "related_pattern",
+      "3AVB": "related_pattern"
+    }
+  },
+  "ABQRS": {
+    "description": "abnormal QRS",
+    "diagnostic_class": "",
+    "statement_category": "Normal/abnormal",
+    "canonical_name": "Abnormal QRS",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  },
+  "PVC": {
+    "description": "ventricular premature complex",
+    "diagnostic_class": "",
+    "statement_category": "Statements related to ectopic rhythm abnormalities",
+    "canonical_name": "Ventricular premature complex",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  },
+  "STD_": {
+    "description": "non-specific ST depression",
+    "diagnostic_class": "",
+    "statement_category": "Basic roots for coding ST-T changes and abnormalities",
+    "canonical_name": "Non-specific ST depression",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  },
+  "VCLVH": {
+    "description": "voltage criteria (QRS) for left ventricular hypertrophy",
+    "diagnostic_class": "",
+    "statement_category": "Ventricular Hypertrophy",
+    "canonical_name": "Voltage criteria (QRS) for left ventricular hypertrophy",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  },
+  "QWAVE": {
+    "description": "Q waves present",
+    "diagnostic_class": "",
+    "statement_category": "Other QRS morphology descriptive statements",
+    "canonical_name": "Q waves present",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  },
+  "LOWT": {
+    "description": "low amplitude T-waves",
+    "diagnostic_class": "",
+    "statement_category": "other ST-T descriptive statements",
+    "canonical_name": "Low amplitude T-waves",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  },
+  "NT_": {
+    "description": "non-specific T-wave changes",
+    "diagnostic_class": "",
+    "statement_category": "Basic roots for coding ST-T changes and abnormalities",
+    "canonical_name": "Non-specific T-wave changes",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  },
+  "PAC": {
+    "description": "atrial premature complex",
+    "diagnostic_class": "",
+    "statement_category": "Statements related to ectopic rhythm abnormalities",
+    "canonical_name": "Atrial premature complex",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  },
+  "LPR": {
+    "description": "prolonged PR interval",
+    "diagnostic_class": "",
+    "statement_category": "Statements related to impulse formation (abnormalities)",
+    "canonical_name": "Prolonged PR interval",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  },
+  "INVT": {
+    "description": "inverted T-waves",
+    "diagnostic_class": "",
+    "statement_category": "other ST-T descriptive statements",
+    "canonical_name": "Inverted T-waves",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  },
+  "LVOLT": {
+    "description": "low QRS voltages in the frontal and horizontal leads",
+    "diagnostic_class": "",
+    "statement_category": "Other QRS morphology descriptive statements",
+    "canonical_name": "Low QRS voltages in the frontal and horizontal leads",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  },
+  "HVOLT": {
+    "description": "high QRS voltage",
+    "diagnostic_class": "",
+    "statement_category": "Other QRS morphology descriptive statements",
+    "canonical_name": "High QRS voltage",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  },
+  "TAB_": {
+    "description": "T-wave abnormality",
+    "diagnostic_class": "",
+    "statement_category": "Basic roots for coding ST-T changes and abnormalities",
+    "canonical_name": "T-wave abnormality",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  },
+  "STE_": {
+    "description": "non-specific ST elevation",
+    "diagnostic_class": "",
+    "statement_category": "Basic roots for coding ST-T changes and abnormalities",
+    "canonical_name": "Non-specific ST elevation",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  },
+  "PRC(S)": {
+    "description": "premature complex(es)",
+    "diagnostic_class": "",
+    "statement_category": "Statements related to ectopic rhythm abnormalities",
+    "canonical_name": "Premature complex(es)",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  },
+  "SR": {
+    "description": "sinus rhythm",
+    "diagnostic_class": "",
+    "statement_category": "Statements related to impulse formation (abnormalities)",
+    "canonical_name": "Sinus rhythm",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  },
+  "AFIB": {
+    "description": "atrial fibrillation",
+    "diagnostic_class": "",
+    "statement_category": "Statements related to impulse formation (abnormalities)",
+    "canonical_name": "Atrial fibrillation",
+    "relationships": {
+      "PAC": "differential_only"
+    }
+  },
+  "STACH": {
+    "description": "sinus tachycardia",
+    "diagnostic_class": "",
+    "statement_category": "Statements related to impulse formation (abnormalities)",
+    "canonical_name": "Sinus tachycardia",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  },
+  "SARRH": {
+    "description": "sinus arrhythmia",
+    "diagnostic_class": "",
+    "statement_category": "Statements related to impulse formation (abnormalities)",
+    "canonical_name": "Sinus arrhythmia",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  },
+  "SBRAD": {
+    "description": "sinus bradycardia",
+    "diagnostic_class": "",
+    "statement_category": "Statements related to impulse formation (abnormalities)",
+    "canonical_name": "Sinus bradycardia",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  },
+  "PACE": {
+    "description": "normal functioning artificial pacemaker",
+    "diagnostic_class": "",
+    "statement_category": "Pacemaker types and pacemaker function",
+    "canonical_name": "Normal functioning artificial pacemaker",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  },
+  "SVARR": {
+    "description": "supraventricular arrhythmia",
+    "diagnostic_class": "",
+    "statement_category": "Statements related to impulse formation (abnormalities)",
+    "canonical_name": "Supraventricular arrhythmia",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  },
+  "BIGU": {
+    "description": "bigeminal pattern (unknown origin, SV or Ventricular)",
+    "diagnostic_class": "",
+    "statement_category": "Statements related to ectopic rhythm abnormalities",
+    "canonical_name": "Bigeminal pattern (unknown origin, SV or Ventricular)",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  },
+  "AFLT": {
+    "description": "atrial flutter",
+    "diagnostic_class": "",
+    "statement_category": "Statements related to impulse formation (abnormalities)",
+    "canonical_name": "Atrial flutter",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  },
+  "SVTAC": {
+    "description": "supraventricular tachycardia",
+    "diagnostic_class": "",
+    "statement_category": "Statements related to impulse formation (abnormalities)",
+    "canonical_name": "Supraventricular tachycardia",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  },
+  "PSVT": {
+    "description": "paroxysmal supraventricular tachycardia",
+    "diagnostic_class": "",
+    "statement_category": "Statements related to impulse formation (abnormalities)",
+    "canonical_name": "Paroxysmal supraventricular tachycardia",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  },
+  "TRIGU": {
+    "description": "trigeminal pattern (unknown origin, SV or Ventricular)",
+    "diagnostic_class": "",
+    "statement_category": "Statements related to ectopic rhythm abnormalities",
+    "canonical_name": "Trigeminal pattern (unknown origin, SV or Ventricular)",
+    "relationships": {
+      "NORM": "differential_only"
+    }
+  }
+}

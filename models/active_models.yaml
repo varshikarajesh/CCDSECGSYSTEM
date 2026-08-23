@@ -1,0 +1,55 @@
+schema_version: "1.0"
+
+classifier:
+  checkpoint: ptbxl_five_superclass/assets/config4_family_rare_hardneg.pt
+  labels: ptbxl_five_superclass/assets/ordered_scp_labels.json
+  thresholds: ptbxl_five_superclass/assets/validation_scp_thresholds.json
+
+retrieval:
+  architecture: JointECGModelV3
+  version: V7_GRADED_PROJECTION
+  checkpoint: faiss/v7/joint_v7_retrieval.pth
+  faiss_index: faiss/v7/faiss_joint_v7.bin
+  faiss_metadata: faiss/v7/faiss_joint_v7_metadata.json
+  raw_top_k: 20
+  reranked_top_k: 5
+
+bridge:
+  implementation: backend.bridge.evidence_bridge_v4.EvidenceBridgeV4
+  version: "4.0.0"
+
+knowledge:
+  database: knowledge/kb.json
+  embeddings: knowledge/embeddings_kb.npy
+  ids: knowledge/id_list.json
+  ontology: knowledge/ontology/clinical_ontology.json
+  condition_cards: knowledge/ontology/condition_cards.json
+  max_chunks: 6
+
+skills:
+  registry: prompt_builder/skills/registry.yaml
+
+llm:
+  mode: real
+  backend: llama_cpp
+  gguf_model: gemma-3-4b-it-GGUF/gemma-3-4b-it-Q4_K_M.gguf
+  model_variant: base
+  adapter_included: false
+  context_length: 4096
+  max_output_tokens: 512
+  safety_reserve_tokens: 384
+  temperature: 0.2
+  use_chat_template: true
+  require_gpu: true
+  n_gpu_layers: -1
+  main_gpu: 0
+  offload_kqv: true
+  flash_attention: true
+  cpu_threads: 2
+
+
+
+deployment:
+  device: auto
+  fail_closed: true
+  offline: true

@@ -1,0 +1,1091 @@
+{
+  "NDT": {
+    "canonical_name": "Non-diagnostic T abnormalities",
+    "display_name": "Non-diagnostic T abnormalities (NDT)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": true,
+    "superclass": "STTC",
+    "subclass": "STTC",
+    "aliases": [
+      "NDT",
+      "non-diagnostic t abnormalities",
+      "non-diagnostic T abnormalities"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "NST_": {
+    "canonical_name": "Non-specific ST changes",
+    "display_name": "Non-specific ST changes (NST_)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": true,
+    "superclass": "STTC",
+    "subclass": "NST_",
+    "aliases": [
+      "NST_",
+      "non-specific st changes",
+      "non-specific ST changes"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "DIG": {
+    "canonical_name": "Digitalis-effect",
+    "display_name": "Digitalis-effect (DIG)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": true,
+    "superclass": "STTC",
+    "subclass": "STTC",
+    "aliases": [
+      "DIG",
+      "digitalis-effect"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "LNGQT": {
+    "canonical_name": "Long QT-interval",
+    "display_name": "Long QT-interval (LNGQT)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": true,
+    "superclass": "STTC",
+    "subclass": "STTC",
+    "aliases": [
+      "LNGQT",
+      "long qt-interval",
+      "long QT-interval"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "NORM": {
+    "canonical_name": "Normal ECG",
+    "display_name": "Normal ECG (NORM)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "NORM",
+    "subclass": "NORM",
+    "aliases": [
+      "NORM",
+      "normal ecg",
+      "normal ECG"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "IMI": {
+    "canonical_name": "Inferior myocardial infarction",
+    "display_name": "Inferior myocardial infarction (IMI)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "MI",
+    "subclass": "IMI",
+    "aliases": [
+      "IMI",
+      "inferior myocardial infarction"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "ASMI": {
+    "canonical_name": "Anteroseptal myocardial infarction",
+    "display_name": "Anteroseptal myocardial infarction (ASMI)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "MI",
+    "subclass": "AMI",
+    "aliases": [
+      "ASMI",
+      "anteroseptal myocardial infarction"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "LVH": {
+    "canonical_name": "Left ventricular hypertrophy",
+    "display_name": "Left ventricular hypertrophy (LVH)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "HYP",
+    "subclass": "LVH",
+    "aliases": [
+      "LVH",
+      "left ventricular hypertrophy"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "LAFB": {
+    "canonical_name": "Left anterior fascicular block",
+    "display_name": "Left anterior fascicular block (LAFB)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "CD",
+    "subclass": "LAFB/LPFB",
+    "aliases": [
+      "LAFB",
+      "left anterior fascicular block"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "ISC_": {
+    "canonical_name": "Non-specific ischemic",
+    "display_name": "Non-specific ischemic (ISC_)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "STTC",
+    "subclass": "ISC_",
+    "aliases": [
+      "ISC_",
+      "non-specific ischemic"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "IRBBB": {
+    "canonical_name": "Incomplete right bundle branch block",
+    "display_name": "Incomplete right bundle branch block (IRBBB)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "CD",
+    "subclass": "IRBBB",
+    "aliases": [
+      "IRBBB",
+      "incomplete right bundle branch block"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "1AVB": {
+    "canonical_name": "First-degree atrioventricular block",
+    "display_name": "First-degree atrioventricular block (1AVB)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "CD",
+    "subclass": "_AVB",
+    "aliases": [
+      "1AVB",
+      "first degree av block",
+      "first degree AV block"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "IVCD": {
+    "canonical_name": "Non-specific intraventricular conduction disturbance (block)",
+    "display_name": "Non-specific intraventricular conduction disturbance (block) (IVCD)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "CD",
+    "subclass": "IVCD",
+    "aliases": [
+      "IVCD",
+      "non-specific intraventricular conduction disturbance (block)"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "ISCAL": {
+    "canonical_name": "Ischemic in anterolateral leads",
+    "display_name": "Ischemic in anterolateral leads (ISCAL)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "STTC",
+    "subclass": "ISCA",
+    "aliases": [
+      "ISCAL",
+      "ischemic in anterolateral leads"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "CRBBB": {
+    "canonical_name": "Complete right bundle branch block",
+    "display_name": "Complete right bundle branch block (CRBBB)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "CD",
+    "subclass": "CRBBB",
+    "aliases": [
+      "CRBBB",
+      "complete right bundle branch block"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "CLBBB": {
+    "canonical_name": "Complete left bundle branch block",
+    "display_name": "Complete left bundle branch block (CLBBB)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "CD",
+    "subclass": "CLBBB",
+    "aliases": [
+      "CLBBB",
+      "complete left bundle branch block"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "ILMI": {
+    "canonical_name": "Inferolateral myocardial infarction",
+    "display_name": "Inferolateral myocardial infarction (ILMI)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "MI",
+    "subclass": "IMI",
+    "aliases": [
+      "ILMI",
+      "inferolateral myocardial infarction"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "LAO/LAE": {
+    "canonical_name": "Left atrial overload/enlargement",
+    "display_name": "Left atrial overload/enlargement (LAO/LAE)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "HYP",
+    "subclass": "LAO/LAE",
+    "aliases": [
+      "LAO/LAE",
+      "left atrial overload/enlargement"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "AMI": {
+    "canonical_name": "Anterior myocardial infarction",
+    "display_name": "Anterior myocardial infarction (AMI)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "MI",
+    "subclass": "AMI",
+    "aliases": [
+      "AMI",
+      "anterior myocardial infarction"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "ALMI": {
+    "canonical_name": "Anterolateral myocardial infarction",
+    "display_name": "Anterolateral myocardial infarction (ALMI)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "MI",
+    "subclass": "AMI",
+    "aliases": [
+      "ALMI",
+      "anterolateral myocardial infarction"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "ISCIN": {
+    "canonical_name": "Ischemic in inferior leads",
+    "display_name": "Ischemic in inferior leads (ISCIN)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "STTC",
+    "subclass": "ISCI",
+    "aliases": [
+      "ISCIN",
+      "ischemic in inferior leads"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "INJAS": {
+    "canonical_name": "Subendocardial injury in anteroseptal leads",
+    "display_name": "Subendocardial injury in anteroseptal leads (INJAS)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "MI",
+    "subclass": "AMI",
+    "aliases": [
+      "INJAS",
+      "subendocardial injury in anteroseptal leads"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "LMI": {
+    "canonical_name": "Lateral myocardial infarction",
+    "display_name": "Lateral myocardial infarction (LMI)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "MI",
+    "subclass": "LMI",
+    "aliases": [
+      "LMI",
+      "lateral myocardial infarction"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "ISCIL": {
+    "canonical_name": "Ischemic in inferolateral leads",
+    "display_name": "Ischemic in inferolateral leads (ISCIL)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "STTC",
+    "subclass": "ISCI",
+    "aliases": [
+      "ISCIL",
+      "ischemic in inferolateral leads"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "LPFB": {
+    "canonical_name": "Left posterior fascicular block",
+    "display_name": "Left posterior fascicular block (LPFB)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "CD",
+    "subclass": "LAFB/LPFB",
+    "aliases": [
+      "LPFB",
+      "left posterior fascicular block"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "ISCAS": {
+    "canonical_name": "Ischemic in anteroseptal leads",
+    "display_name": "Ischemic in anteroseptal leads (ISCAS)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "STTC",
+    "subclass": "ISCA",
+    "aliases": [
+      "ISCAS",
+      "ischemic in anteroseptal leads"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "INJAL": {
+    "canonical_name": "Subendocardial injury in anterolateral leads",
+    "display_name": "Subendocardial injury in anterolateral leads (INJAL)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "MI",
+    "subclass": "AMI",
+    "aliases": [
+      "INJAL",
+      "subendocardial injury in anterolateral leads"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "ISCLA": {
+    "canonical_name": "Ischemic in lateral leads",
+    "display_name": "Ischemic in lateral leads (ISCLA)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "STTC",
+    "subclass": "ISCA",
+    "aliases": [
+      "ISCLA",
+      "ischemic in lateral leads"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "RVH": {
+    "canonical_name": "Right ventricular hypertrophy",
+    "display_name": "Right ventricular hypertrophy (RVH)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "HYP",
+    "subclass": "RVH",
+    "aliases": [
+      "RVH",
+      "right ventricular hypertrophy"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "ANEUR": {
+    "canonical_name": "ST-T changes compatible with ventricular aneurysm",
+    "display_name": "ST-T changes compatible with ventricular aneurysm (ANEUR)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "STTC",
+    "subclass": "STTC",
+    "aliases": [
+      "ANEUR",
+      "st-t changes compatible with ventricular aneurysm",
+      "ST-T changes compatible with ventricular aneurysm"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "RAO/RAE": {
+    "canonical_name": "Right atrial overload/enlargement",
+    "display_name": "Right atrial overload/enlargement (RAO/RAE)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "HYP",
+    "subclass": "RAO/RAE",
+    "aliases": [
+      "RAO/RAE",
+      "right atrial overload/enlargement"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "EL": {
+    "canonical_name": "Electrolytic disturbance or drug (former EDIS)",
+    "display_name": "Electrolytic disturbance or drug (former EDIS) (EL)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "STTC",
+    "subclass": "STTC",
+    "aliases": [
+      "EL",
+      "electrolytic disturbance or drug (former edis)",
+      "electrolytic disturbance or drug (former EDIS)"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "WPW": {
+    "canonical_name": "Wolf-Parkinson-White syndrome",
+    "display_name": "Wolf-Parkinson-White syndrome (WPW)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "CD",
+    "subclass": "WPW",
+    "aliases": [
+      "WPW",
+      "wolf-parkinson-white syndrome",
+      "Wolf-Parkinson-White syndrome"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "ILBBB": {
+    "canonical_name": "Incomplete left bundle branch block",
+    "display_name": "Incomplete left bundle branch block (ILBBB)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "CD",
+    "subclass": "ILBBB",
+    "aliases": [
+      "ILBBB",
+      "incomplete left bundle branch block"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "IPLMI": {
+    "canonical_name": "Inferoposterolateral myocardial infarction",
+    "display_name": "Inferoposterolateral myocardial infarction (IPLMI)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "MI",
+    "subclass": "IMI",
+    "aliases": [
+      "IPLMI",
+      "inferoposterolateral myocardial infarction"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "ISCAN": {
+    "canonical_name": "Ischemic in anterior leads",
+    "display_name": "Ischemic in anterior leads (ISCAN)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "STTC",
+    "subclass": "ISCA",
+    "aliases": [
+      "ISCAN",
+      "ischemic in anterior leads"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "IPMI": {
+    "canonical_name": "Inferoposterior myocardial infarction",
+    "display_name": "Inferoposterior myocardial infarction (IPMI)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "MI",
+    "subclass": "IMI",
+    "aliases": [
+      "IPMI",
+      "inferoposterior myocardial infarction"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "SEHYP": {
+    "canonical_name": "Septal hypertrophy",
+    "display_name": "Septal hypertrophy (SEHYP)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "HYP",
+    "subclass": "SEHYP",
+    "aliases": [
+      "SEHYP",
+      "septal hypertrophy"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "INJIN": {
+    "canonical_name": "Subendocardial injury in inferior leads",
+    "display_name": "Subendocardial injury in inferior leads (INJIN)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "MI",
+    "subclass": "IMI",
+    "aliases": [
+      "INJIN",
+      "subendocardial injury in inferior leads"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "INJLA": {
+    "canonical_name": "Subendocardial injury in lateral leads",
+    "display_name": "Subendocardial injury in lateral leads (INJLA)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "MI",
+    "subclass": "AMI",
+    "aliases": [
+      "INJLA",
+      "subendocardial injury in lateral leads"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "PMI": {
+    "canonical_name": "Posterior myocardial infarction",
+    "display_name": "Posterior myocardial infarction (PMI)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "MI",
+    "subclass": "PMI",
+    "aliases": [
+      "PMI",
+      "posterior myocardial infarction"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "3AVB": {
+    "canonical_name": "Third degree AV block",
+    "display_name": "Third degree AV block (3AVB)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "CD",
+    "subclass": "_AVB",
+    "aliases": [
+      "3AVB",
+      "third degree av block",
+      "third degree AV block"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "INJIL": {
+    "canonical_name": "Subendocardial injury in inferolateral leads",
+    "display_name": "Subendocardial injury in inferolateral leads (INJIL)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "MI",
+    "subclass": "IMI",
+    "aliases": [
+      "INJIL",
+      "subendocardial injury in inferolateral leads"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "2AVB": {
+    "canonical_name": "Second degree AV block",
+    "display_name": "Second degree AV block (2AVB)",
+    "diagnostic": true,
+    "rhythm": false,
+    "form": false,
+    "superclass": "CD",
+    "subclass": "_AVB",
+    "aliases": [
+      "2AVB",
+      "second degree av block",
+      "second degree AV block"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "ABQRS": {
+    "canonical_name": "Abnormal QRS",
+    "display_name": "Abnormal QRS (ABQRS)",
+    "diagnostic": false,
+    "rhythm": false,
+    "form": true,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "ABQRS",
+      "abnormal qrs",
+      "abnormal QRS"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "PVC": {
+    "canonical_name": "Ventricular premature complex",
+    "display_name": "Ventricular premature complex (PVC)",
+    "diagnostic": false,
+    "rhythm": false,
+    "form": true,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "PVC",
+      "ventricular premature complex"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "STD_": {
+    "canonical_name": "Non-specific ST depression",
+    "display_name": "Non-specific ST depression (STD_)",
+    "diagnostic": false,
+    "rhythm": false,
+    "form": true,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "STD_",
+      "non-specific st depression",
+      "non-specific ST depression"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "VCLVH": {
+    "canonical_name": "Voltage criteria (QRS) for left ventricular hypertrophy",
+    "display_name": "Voltage criteria (QRS) for left ventricular hypertrophy (VCLVH)",
+    "diagnostic": false,
+    "rhythm": false,
+    "form": true,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "VCLVH",
+      "voltage criteria (qrs) for left ventricular hypertrophy",
+      "voltage criteria (QRS) for left ventricular hypertrophy"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "QWAVE": {
+    "canonical_name": "Q waves present",
+    "display_name": "Q waves present (QWAVE)",
+    "diagnostic": false,
+    "rhythm": false,
+    "form": true,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "QWAVE",
+      "q waves present",
+      "Q waves present"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "LOWT": {
+    "canonical_name": "Low amplitude T-waves",
+    "display_name": "Low amplitude T-waves (LOWT)",
+    "diagnostic": false,
+    "rhythm": false,
+    "form": true,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "LOWT",
+      "low amplitude t-waves",
+      "low amplitude T-waves"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "NT_": {
+    "canonical_name": "Non-specific T-wave changes",
+    "display_name": "Non-specific T-wave changes (NT_)",
+    "diagnostic": false,
+    "rhythm": false,
+    "form": true,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "NT_",
+      "non-specific t-wave changes",
+      "non-specific T-wave changes"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "PAC": {
+    "canonical_name": "Atrial premature complex",
+    "display_name": "Atrial premature complex (PAC)",
+    "diagnostic": false,
+    "rhythm": false,
+    "form": true,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "PAC",
+      "atrial premature complex"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "LPR": {
+    "canonical_name": "Prolonged PR interval",
+    "display_name": "Prolonged PR interval (LPR)",
+    "diagnostic": false,
+    "rhythm": false,
+    "form": true,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "LPR",
+      "prolonged pr interval",
+      "prolonged PR interval"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "INVT": {
+    "canonical_name": "Inverted T-waves",
+    "display_name": "Inverted T-waves (INVT)",
+    "diagnostic": false,
+    "rhythm": false,
+    "form": true,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "INVT",
+      "inverted t-waves",
+      "inverted T-waves"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "LVOLT": {
+    "canonical_name": "Low QRS voltages in the frontal and horizontal leads",
+    "display_name": "Low QRS voltages in the frontal and horizontal leads (LVOLT)",
+    "diagnostic": false,
+    "rhythm": false,
+    "form": true,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "LVOLT",
+      "low qrs voltages in the frontal and horizontal leads",
+      "low QRS voltages in the frontal and horizontal leads"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "HVOLT": {
+    "canonical_name": "High QRS voltage",
+    "display_name": "High QRS voltage (HVOLT)",
+    "diagnostic": false,
+    "rhythm": false,
+    "form": true,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "HVOLT",
+      "high qrs voltage",
+      "high QRS voltage"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "TAB_": {
+    "canonical_name": "T-wave abnormality",
+    "display_name": "T-wave abnormality (TAB_)",
+    "diagnostic": false,
+    "rhythm": false,
+    "form": true,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "TAB_",
+      "t-wave abnormality",
+      "T-wave abnormality"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "STE_": {
+    "canonical_name": "Non-specific ST elevation",
+    "display_name": "Non-specific ST elevation (STE_)",
+    "diagnostic": false,
+    "rhythm": false,
+    "form": true,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "STE_",
+      "non-specific st elevation",
+      "non-specific ST elevation"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "PRC(S)": {
+    "canonical_name": "Premature complex(es)",
+    "display_name": "Premature complex(es) (PRC(S))",
+    "diagnostic": false,
+    "rhythm": false,
+    "form": true,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "PRC(S)",
+      "premature complex(es)"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "SR": {
+    "canonical_name": "Sinus rhythm",
+    "display_name": "Sinus rhythm (SR)",
+    "diagnostic": false,
+    "rhythm": true,
+    "form": false,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "SR",
+      "sinus rhythm"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "AFIB": {
+    "canonical_name": "Atrial fibrillation",
+    "display_name": "Atrial fibrillation (AFIB)",
+    "diagnostic": false,
+    "rhythm": true,
+    "form": false,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "AFIB",
+      "atrial fibrillation"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "STACH": {
+    "canonical_name": "Sinus tachycardia",
+    "display_name": "Sinus tachycardia (STACH)",
+    "diagnostic": false,
+    "rhythm": true,
+    "form": false,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "STACH",
+      "sinus tachycardia"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "SARRH": {
+    "canonical_name": "Sinus arrhythmia",
+    "display_name": "Sinus arrhythmia (SARRH)",
+    "diagnostic": false,
+    "rhythm": true,
+    "form": false,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "SARRH",
+      "sinus arrhythmia"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "SBRAD": {
+    "canonical_name": "Sinus bradycardia",
+    "display_name": "Sinus bradycardia (SBRAD)",
+    "diagnostic": false,
+    "rhythm": true,
+    "form": false,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "SBRAD",
+      "sinus bradycardia"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "PACE": {
+    "canonical_name": "Normal functioning artificial pacemaker",
+    "display_name": "Normal functioning artificial pacemaker (PACE)",
+    "diagnostic": false,
+    "rhythm": true,
+    "form": false,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "PACE",
+      "normal functioning artificial pacemaker"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "SVARR": {
+    "canonical_name": "Supraventricular arrhythmia",
+    "display_name": "Supraventricular arrhythmia (SVARR)",
+    "diagnostic": false,
+    "rhythm": true,
+    "form": false,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "SVARR",
+      "supraventricular arrhythmia"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "BIGU": {
+    "canonical_name": "Bigeminal pattern (unknown origin, SV or Ventricular)",
+    "display_name": "Bigeminal pattern (unknown origin, SV or Ventricular) (BIGU)",
+    "diagnostic": false,
+    "rhythm": true,
+    "form": false,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "BIGU",
+      "bigeminal pattern (unknown origin, sv or ventricular)",
+      "bigeminal pattern (unknown origin, SV or Ventricular)"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "AFLT": {
+    "canonical_name": "Atrial flutter",
+    "display_name": "Atrial flutter (AFLT)",
+    "diagnostic": false,
+    "rhythm": true,
+    "form": false,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "AFLT",
+      "atrial flutter"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "SVTAC": {
+    "canonical_name": "Supraventricular tachycardia",
+    "display_name": "Supraventricular tachycardia (SVTAC)",
+    "diagnostic": false,
+    "rhythm": true,
+    "form": false,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "SVTAC",
+      "supraventricular tachycardia"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "PSVT": {
+    "canonical_name": "Paroxysmal supraventricular tachycardia",
+    "display_name": "Paroxysmal supraventricular tachycardia (PSVT)",
+    "diagnostic": false,
+    "rhythm": true,
+    "form": false,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "PSVT",
+      "paroxysmal supraventricular tachycardia"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  },
+  "TRIGU": {
+    "canonical_name": "Trigeminal pattern (unknown origin, SV or Ventricular)",
+    "display_name": "Trigeminal pattern (unknown origin, SV or Ventricular) (TRIGU)",
+    "diagnostic": false,
+    "rhythm": true,
+    "form": false,
+    "superclass": "",
+    "subclass": "",
+    "aliases": [
+      "TRIGU",
+      "trigeminal pattern (unknown origin, sv or ventricular)",
+      "trigeminal pattern (unknown origin, SV or Ventricular)"
+    ],
+    "source": "scp_statements.csv",
+    "validation_state": "validated"
+  }
+}

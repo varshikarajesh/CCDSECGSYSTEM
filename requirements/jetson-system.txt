@@ -1,0 +1,5 @@
+# System packages (install with apt, not pip):
+# python3 python3-pip python3-venv python3-dev
+# build-essential cmake ninja-build git libopenblas-dev liblapack-dev
+# libgomp1 libsndfile1
+# CUDA/cuDNN are supplied by NVIDIA JetPack.

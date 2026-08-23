@@ -1,0 +1,20 @@
+# The local Gemma model is the only oversized repository asset.
+# Teammates need Git LFS installed before cloning/pulling this private repository.
+*.gguf filter=lfs diff=lfs merge=lfs -text
+# Preserve model/index binaries without line-ending conversion.
+*.pt -text
+*.pth -text
+*.bin -text
+*.faiss -text
+*.npy -text
+# Normalize source and metadata text files across Windows and Jetson Linux.
+*.py text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.csv text eol=lf

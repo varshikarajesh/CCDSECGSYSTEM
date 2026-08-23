@@ -1,0 +1,26 @@
+{
+  "status": "production",
+  "version": "V7_GRADED_PROJECTION",
+  "model_class": "JointECGModelV3",
+  "checkpoint_sha256": "aa31deb3d2f914af3e08d4f6ecdfd783a60ee502003f472daf2cef447adc968b",
+  "index_sha256": "787ec6d006e1ee37f29e6453a6d478822cf1e4337fa261fca252d902450f4a74",
+  "metadata_sha256": "9779a98c8afdddc55c65d4f21a064c2bcf95e342a5f0d7cfd77a3a57706fed24",
+  "vector_count": 17418,
+  "metadata_row_count": 17418,
+  "embedding_dimension": 128,
+  "similarity": "inner_product_on_l2_normalized_vectors",
+  "preprocessing": "12 leads, 100 Hz, 1000 samples, per-lead z-score",
+  "validated_fold10_metrics": {
+    "recall_at_1": 0.6719745222929936,
+    "recall_at_5": 0.8580527752502275,
+    "recall_at_10": 0.8976342129208371,
+    "mrr": 0.7552655398012396
+  },
+  "promotion_timestamp": "2026-08-12T19:14:22.838464+00:00",
+  "faiss_config": {
+    "vector_count": 17418
+  },
+  "audit": {
+    "metadata_row_count": 17418
+  }
+}

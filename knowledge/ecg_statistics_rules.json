@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0.0",
+  "purpose": "Deterministic ECG statistics and morphology support for the multi-label diagnostic bridge. Rules generate evidence, never a standalone diagnosis.",
+  "safety": {
+    "authority": "decision_support_only",
+    "missing_data_policy": "not_evaluable",
+    "unknown_is_negative": false,
+    "ood_removed": true,
+    "patient_context_required_for_management": true,
+    "clinician_confirmation_required": true
+  },
+  "sources": {
+    "ANESTHGUIDE_ECG_2026": {
+      "title": "ECG and Heart Rhythm - Basic Interpretation and Common Arrhythmias",
+      "authors": "Kai Knudsen",
+      "organization": "The Anesthesia Guide",
+      "year": 2026,
+      "url": "https://anesthguide.com/topic/ecg/",
+      "local_attachment_sha256": "a0ef429c508270f974775ba0888ce265708b5df8a25ba6fb7df288430e8861d4",
+      "evidence_type": "educational_review",
+      "strength": "supporting"
+    },
+    "AHA_ECG_STANDARD_2007": {
+      "title": "Recommendations for the Standardization and Interpretation of the Electrocardiogram, Part I",
+      "organization": "AHA/ACCF/HRS",
+      "year": 2007,
+      "doi": "10.1161/CIRCULATIONAHA.106.180200",
+      "url": "https://www.ahajournals.org/doi/10.1161/CIRCULATIONAHA.106.180200",
+      "evidence_type": "scientific_statement",
+      "strength": "high"
+    },
+    "AHA_CONDUCTION_2009": {
+      "title": "Recommendations for the Standardization and Interpretation of the Electrocardiogram, Part III",
+      "organization": "AHA/ACCF/HRS",
+      "year": 2009,
+      "doi": "10.1161/CIRCULATIONAHA.108.191095",
+      "url": "https://www.ahajournals.org/doi/10.1161/CIRCULATIONAHA.108.191095",
+      "evidence_type": "scientific_statement",
+      "strength": "high"
+    },
+    "ESC_QT_MEASUREMENT": {
+      "title": "How to measure the QT interval",
+      "organization": "European Society of Cardiology Council on Cardiovascular Genomics",
+      "year": 2024,
+      "url": "https://www.escardio.org/communities/councils/genomics/scientific-documents-and-publications/cardiogenomics-insights/volume-9/how-to-measure-the-qt-interval/",
+      "evidence_type": "professional_measurement_guidance",
+      "strength": "high"
+    }
+  },
+  "metrics": [
+    {"id":"heart_rate_from_mean_rr","category":"rate","output_unit":"bpm","formula":"60000 / mean_rr_ms","requires":["mean_rr_ms"],"valid_when":"mean_rr_ms > 0","minimum_window_seconds":10,"source_ids":["ANESTHGUIDE_ECG_2026"]},
+    {"id":"heart_rate_from_duration","category":"rate","output_unit":"bpm","formula":"60 * beat_count / duration_seconds","requires":["beat_count","duration_seconds"],"valid_when":"beat_count >= 2 and duration_seconds > 0","minimum_window_seconds":10,"source_ids":["ANESTHGUIDE_ECG_2026"]},
+    {"id":"mean_rr","category":"hrv_time","output_unit":"ms","formula":"mean(nn_intervals_ms)","requires":["nn_intervals_ms"],"minimum_valid_intervals":2,"source_ids":["AHA_ECG_STANDARD_2007"]},
+    {"id":"median_rr","category":"hrv_time","output_unit":"ms","formula":"median(nn_intervals_ms)","requires":["nn_intervals_ms"],"minimum_valid_intervals":2,"source_ids":["AHA_ECG_STANDARD_2007"]},
+    {"id":"sdnn","category":"hrv_time","output_unit":"ms","formula":"sample_std(nn_intervals_ms, ddof=1)","requires":["nn_intervals_ms"],"minimum_valid_intervals":3,"duration_sensitive":true,"source_ids":["AHA_ECG_STANDARD_2007"]},
+    {"id":"sdsd","category":"hrv_time","output_unit":"ms","formula":"sample_std(diff(nn_intervals_ms), ddof=1)","requires":["nn_intervals_ms"],"minimum_valid_intervals":3,"source_ids":["AHA_ECG_STANDARD_2007"]},
+    {"id":"rmssd","category":"hrv_time","output_unit":"ms","formula":"sqrt(mean(diff(nn_intervals_ms)^2))","requires":["nn_intervals_ms"],"minimum_valid_intervals":3,"source_ids":["AHA_ECG_STANDARD_2007"]},
+    {"id":"pnn50","category":"hrv_time","output_unit":"percent","formula":"100 * count(abs(diff(nn_intervals_ms)) > 50) / count(diff(nn_intervals_ms))","requires":["nn_intervals_ms"],"minimum_valid_intervals":3,"source_ids":["AHA_ECG_STANDARD_2007"]},
+    {"id":"pnn20","category":"hrv_time","output_unit":"percent","formula":"100 * count(abs(diff(nn_intervals_ms)) > 20) / count(diff(nn_intervals_ms))","requires":["nn_intervals_ms"],"minimum_valid_intervals":3,"source_ids":["AHA_ECG_STANDARD_2007"]},
+    {"id":"cvrr","category":"hrv_time","output_unit":"percent","formula":"100 * sdnn_ms / mean_rr_ms","requires":["sdnn_ms","mean_rr_ms"],"valid_when":"mean_rr_ms > 0","source_ids":["AHA_ECG_STANDARD_2007"]},
+    {"id":"rr_iqr","category":"hrv_robust","output_unit":"ms","formula":"percentile75(nn_intervals_ms) - percentile25(nn_intervals_ms)","requires":["nn_intervals_ms"],"minimum_valid_intervals":4,"source_ids":["AHA_ECG_STANDARD_2007"]},
+    {"id":"rr_mad","category":"hrv_robust","output_unit":"ms","formula":"median(abs(nn_intervals_ms - median(nn_intervals_ms)))","requires":["nn_intervals_ms"],"minimum_valid_intervals":3,"source_ids":["AHA_ECG_STANDARD_2007"]},
+    {"id":"qtc_bazett","category":"interval","output_unit":"ms","formula":"qt_ms / sqrt(rr_ms / 1000)","requires":["qt_ms","rr_ms"],"valid_when":"qt_ms > 0 and rr_ms > 0","caution":"May overcorrect at high heart rates and undercorrect at low heart rates.","source_ids":["ESC_QT_MEASUREMENT"]},
+    {"id":"qtc_fridericia","category":"interval","output_unit":"ms","formula":"qt_ms / cbrt(rr_ms / 1000)","requires":["qt_ms","rr_ms"],"valid_when":"qt_ms > 0 and rr_ms > 0","preferred_for":"tachycardia or when Bazett rate bias is a concern","source_ids":["ESC_QT_MEASUREMENT"]},
+    {"id":"qtc_framingham","category":"interval","output_unit":"ms","formula":"qt_ms + 154 * (1 - rr_ms / 1000)","requires":["qt_ms","rr_ms"],"valid_when":"qt_ms > 0 and rr_ms > 0","source_ids":["ESC_QT_MEASUREMENT"]},
+    {"id":"qtc_hodges","category":"interval","output_unit":"ms","formula":"qt_ms + 1.75 * (heart_rate_bpm - 60)","requires":["qt_ms","heart_rate_bpm"],"valid_when":"qt_ms > 0 and heart_rate_bpm > 0","source_ids":["ESC_QT_MEASUREMENT"]},
+    {"id":"sokolow_lyon","category":"voltage","output_unit":"mV","formula":"abs(s_v1_mv) + max(r_v5_mv, r_v6_mv)","requires":["s_v1_mv","r_v5_mv","r_v6_mv"],"threshold":{"operator":">","value":3.5,"supports":["LVH"]},"source_ids":["ANESTHGUIDE_ECG_2026"]},
+    {"id":"cornell_voltage","category":"voltage","output_unit":"mV","formula":"abs(s_v3_mv) + r_avl_mv","requires":["s_v3_mv","r_avl_mv"],"sex_specific_thresholds":{"male":{"operator":">","value":2.8},"female":{"operator":">","value":2.0}},"supports":["LVH"],"caution":"Use only when sex metadata and calibrated mV amplitudes are available.","source_ids":["AHA_ECG_STANDARD_2007"]}
+  ],
+  "support_rules": [
+    {"id":"rate_bradycardia","all":[{"field":"heart_rate_bpm","operator":"<","value":60}],"supports":["SBRAD"],"weight":0.35,"specificity":"low","source_ids":["ANESTHGUIDE_ECG_2026"]},
+    {"id":"rate_tachycardia","all":[{"field":"heart_rate_bpm","operator":">","value":100}],"supports":["STACH"],"weight":0.35,"specificity":"low","source_ids":["ANESTHGUIDE_ECG_2026"]},
+    {"id":"first_degree_av_block","all":[{"field":"pr_ms","operator":">","value":200},{"field":"p_to_qrs_conduction_ratio","operator":"==","value":1.0}],"supports":["1AVB"],"weight":0.75,"source_ids":["ANESTHGUIDE_ECG_2026"]},
+    {"id":"wide_qrs","all":[{"field":"qrs_ms","operator":">=","value":120}],"supports":["IVCD","CRBBB","CLBBB"],"weight":0.35,"specificity":"low","caution":"Wide QRS alone does not distinguish bundle branch block, ventricular rhythm, pacing, or pre-excitation.","source_ids":["AHA_CONDUCTION_2009"]},
+    {"id":"rbbb_pattern","all":[{"field":"qrs_ms","operator":">=","value":120},{"field":"rsr_prime_v1_v2","operator":"==","value":true},{"field":"broad_s_i_v6","operator":"==","value":true}],"supports":["CRBBB"],"weight":0.9,"source_ids":["AHA_CONDUCTION_2009"]},
+    {"id":"lbbb_pattern","all":[{"field":"qrs_ms","operator":">=","value":120},{"field":"broad_notched_r_lateral","operator":"==","value":true},{"field":"deep_broad_s_or_qs_v1_v2","operator":"==","value":true}],"supports":["CLBBB"],"weight":0.9,"source_ids":["AHA_CONDUCTION_2009"]},
+    {"id":"af_pattern","all":[{"field":"rr_irregularly_irregular","operator":"==","value":true},{"field":"distinct_p_waves","operator":"==","value":false}],"supports":["AFIB"],"weight":0.9,"source_ids":["ANESTHGUIDE_ECG_2026"]},
+    {"id":"flutter_2_to_1_pattern","all":[{"field":"flutter_waves","operator":"==","value":true},{"field":"heart_rate_bpm","operator":"between","value":[140,160]}],"supports":["AFLT"],"weight":0.8,"source_ids":["ANESTHGUIDE_ECG_2026"]},
+    {"id":"long_qtc_high_risk","any":[{"field":"qtc_fridericia_ms","operator":">","value":500},{"field":"qtc_bazett_ms","operator":">","value":500}],"supports":["LNGQT"],"weight":0.85,"red_flag":true,"caution":"Confirm QT measurement manually and consider QRS duration, medications, electrolytes, sex and repeated ECGs.","source_ids":["ESC_QT_MEASUREMENT","ANESTHGUIDE_ECG_2026"]},
+    {"id":"short_qtc_support","all":[{"field":"qtc_fridericia_ms","operator":"<=","value":320}],"supports":["SQT"],"weight":0.75,"caution":"ECG support is not a complete short-QT syndrome diagnosis.","source_ids":["ESC_QT_MEASUREMENT"]},
+    {"id":"lvh_sokolow_support","all":[{"field":"sokolow_lyon_mv","operator":">","value":3.5}],"supports":["LVH"],"weight":0.65,"caution":"Voltage criterion has limited sensitivity and requires calibrated amplitudes.","source_ids":["ANESTHGUIDE_ECG_2026"]},
+    {"id":"possible_ischemic_st_change","any":[{"field":"contiguous_st_elevation","operator":"==","value":true},{"field":"contiguous_st_depression","operator":"==","value":true},{"field":"regional_t_wave_inversion","operator":"==","value":true}],"supports":["ISC_","STTC"],"weight":0.45,"specificity":"low","red_flag":true,"caution":"ST-T changes are not diagnostic alone; symptoms, serial ECGs and biomarkers are required.","source_ids":["ANESTHGUIDE_ECG_2026"]}
+  ],
+  "contradiction_rules": [
+    {"id":"norm_vs_abnormal_interval","when_any":[{"field":"qrs_ms","operator":">=","value":120},{"field":"pr_ms","operator":">","value":200},{"field":"qtc_fridericia_ms","operator":">","value":500}],"contradicts":["NORM"],"weight":0.8},
+    {"id":"norm_vs_abnormal_rhythm","when_any":[{"field":"rr_irregularly_irregular","operator":"==","value":true},{"field":"dropped_qrs","operator":"==","value":true},{"field":"av_dissociation","operator":"==","value":true}],"contradicts":["NORM"],"weight":0.9}
+  ],
+  "bridge_contract": {
+    "input_scopes": ["recording_overall","stable_reference","abnormal_episode","representative_window"],
+    "required_metadata": ["sampling_rate_hz","duration_seconds","lead_order","amplitude_unit","measurement_status"],
+    "output_fields": ["calculated_metrics","supporting_evidence","contradicting_evidence","not_evaluable","warnings","source_ids"],
+    "fusion_rule": "Statistics may raise or lower support for an existing multi-label candidate but may not create a final diagnosis without classifier or retrieval support, except deterministic red-flag routing for clinician review."
+  }
+}

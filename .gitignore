@@ -1,0 +1,64 @@
+# Python-generated files
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local Python environments
+.venv/
+venv/
+env/
+.conda/
+
+# Frontend dependencies and generated builds
+node_modules/
+dist/
+.pnpm-store/
+.vite/
+.parcel-cache/
+coverage/
+
+# Runtime output, logs and temporary acquisition caches
+outputs/
+output/
+logs/
+*.log
+tmp/
+temp/
+.cache/
+trace_ecg_recordings/
+recording_cache/
+
+# Patient/session state and mutable local databases
+backend/database/*.db
+backend/database/*.db-*
+backend/database/*.sqlite
+backend/database/*.sqlite3
+*.db-wal
+*.db-shm
+
+# Local secrets and machine-specific configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Gemma is larger than GitHub's 2 GiB per-object LFS limit. Install it as a
+# separately governed deployment asset at the configured path.
+gemma-3-4b-it-GGUF/*.gguf
+
+# PTB-XL waveform corpus is a separately governed deployment asset.
+# Keep metadata needed for lookup, but do not redistribute waveform files via Git.
+data/records100/
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini

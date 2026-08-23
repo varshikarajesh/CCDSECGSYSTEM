@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "failures": [],
+  "total_active_chunks": 976,
+  "embedding_shape": [
+    976,
+    384
+  ],
+  "embedding_algorithm": "deterministic_blake2b_word_bigram_hashing_v1",
+  "active_sources_count": 37,
+  "exact_label_coverage": 71
+}
