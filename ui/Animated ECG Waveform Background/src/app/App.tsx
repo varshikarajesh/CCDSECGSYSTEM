@@ -24,16 +24,23 @@ import {
   Usb,
   Play,
   Square,
-  Stethoscope
+  Stethoscope,
+  MapPin,
+  Navigation,
+  Phone,
+  Copy,
+  ShieldCheck
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
 import AnimatedECGBackground from "./components/AnimatedECGBackground";
+import HospitalStreetMap from "./components/HospitalStreetMap";
 import * as api from "./lib/api";
+import { CHENNAI_HOSPITALS } from "./data/chennaiHospitals";
 
 // 12 lead names array
 const LEAD_NAMES = ["I", "II", "III", "aVR", "aVL", "aVF", "V1", "V2", "V3", "V4", "V5", "V6"];
-const REPORT_SECTIONS = [["waveform", "Waveform & Metrics"], ["decision", "Decision"], ["retrieval", "Retrieval"], ["chat", "Clinical Q&A"], ["feedback", "Feedback"]] as const;
+const REPORT_SECTIONS = [["waveform", "Waveform & Metrics"], ["decision", "Decision"], ["retrieval", "Similar Cases"], ["chat", "Cordis"], ["referral", "Emergency Referral"], ["feedback", "Feedback"]] as const;
 
 // Emergency fallback only. The complete registry is loaded from the API.
 const LABEL_EXPANSIONS: Record<string, string> = {
@@ -53,6 +60,22 @@ interface Message {
   citations?: any[];
   evidence?: any;
 }
+
+interface DeviceLocation {
+  latitude: number;
+  longitude: number;
+  accuracy: number;
+}
+
+const distanceKm = (from: DeviceLocation, to: { latitude: number; longitude: number }) => {
+  const radians = (degrees: number) => degrees * Math.PI / 180;
+  const earthRadiusKm = 6371;
+  const latitudeDelta = radians(to.latitude - from.latitude);
+  const longitudeDelta = radians(to.longitude - from.longitude);
+  const a = Math.sin(latitudeDelta / 2) ** 2
+    + Math.cos(radians(from.latitude)) * Math.cos(radians(to.latitude)) * Math.sin(longitudeDelta / 2) ** 2;
+  return earthRadiusKm * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+};
 
 export default function App() {
   const getMetric = (result: any, key: string) => {
@@ -175,6 +198,7 @@ export default function App() {
   const [analyzingSelectedInterval, setAnalyzingSelectedInterval] = useState(false);
   const [selectedLead, setSelectedLead] = useState<string>("All");
   const [isEcgExpanded, setIsEcgExpanded] = useState<boolean>(false);
+  const [isMapExpanded, setIsMapExpanded] = useState<boolean>(false);
   const [viewerStart, setViewerStart] = useState<number>(0);
   const [viewerDuration, setViewerDuration] = useState<number>(10);
   const [labelRegistry, setLabelRegistry] = useState<Record<string, any>>({});
@@ -191,8 +215,8 @@ export default function App() {
   const [floatingAnswer, setFloatingAnswer] = useState("");
   const [floatingBusy, setFloatingBusy] = useState(false);
 
-  // Feedback State
-  const [reviewerId, setReviewerId] = useState("dr_smith");
+  // Clinician feedback state
+  const [reviewerId, setReviewerId] = useState("");
   const [verdict, setVerdict] = useState("Cannot Determine");
   const [feedbackNotes, setFeedbackNotes] = useState("");
   const [correctedPrimary, setCorrectedPrimary] = useState("");
@@ -201,7 +225,23 @@ export default function App() {
   const [confidenceRating, setConfidenceRating] = useState("Appropriate");
   const [explanationRating, setExplanationRating] = useState("Neutral");
   const [retrievalRatings, setRetrievalRatings] = useState<Record<string, string>>({});
-  const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
+  const [feedbackStatus, setFeedbackStatus] = useState<"idle" | "submitting" | "submitted" | "error">("idle");
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+
+  // Clinician-confirmed emergency referral state
+  const [deviceLocation, setDeviceLocation] = useState<DeviceLocation | null>(null);
+  const [locationStatus, setLocationStatus] = useState("Location has not been requested.");
+  const [locating, setLocating] = useState(false);
+  const [selectedHospitalId, setSelectedHospitalId] = useState("");
+  const [smsRecipient, setSmsRecipient] = useState("");
+  const [patientReference, setPatientReference] = useState("");
+  const [patientAge, setPatientAge] = useState("");
+  const [patientSex, setPatientSex] = useState("Not stated");
+  const [clinicalHistory, setClinicalHistory] = useState("");
+  const [clinicCallback, setClinicCallback] = useState("");
+  const [referralConsent, setReferralConsent] = useState(false);
+  const [routingEnabled, setRoutingEnabled] = useState(false);
+  const [copyStatus, setCopyStatus] = useState("");
 
   // PWA installation state
   const [isInstallable, setIsInstallable] = useState(false);
@@ -357,13 +397,24 @@ export default function App() {
     setFloatingQuery("");
     setFloatingAnswer("");
     setFloatingBusy(false);
-    setActiveReportSection("waveform");
     setFeedbackNotes("");
     setCorrectedPrimary("");
     setCorrectedSecondary("");
     setCorrectedFamily("Other");
     setRetrievalRatings({});
-    setFeedbackSubmitted(false);
+    setFeedbackStatus("idle");
+    setFeedbackMessage("");
+    setActiveReportSection("waveform");
+    setSelectedHospitalId("");
+    setSmsRecipient("");
+    setPatientReference("");
+    setPatientAge("");
+    setPatientSex("Not stated");
+    setClinicalHistory("");
+    setClinicCallback("");
+    setReferralConsent(false);
+    setRoutingEnabled(false);
+    setCopyStatus("");
   };
 
   const analyzeRecordingFile = async (recordingFile: File) => {
@@ -550,7 +601,7 @@ export default function App() {
     } catch (err: any) {
       setChatMessages((prev) => [
         ...prev,
-        { role: "assistant", content: `Clinical Q&A request failed: ${err.message}` }
+        { role: "assistant", content: `Cordis request failed: ${err.message}` }
       ]);
     } finally {
       setSendingChat(false);
@@ -573,6 +624,45 @@ export default function App() {
       setFloatingAnswer(`Clinical assistant request failed: ${error.message}`);
     } finally {
       setFloatingBusy(false);
+    }
+  };
+
+  const handleFeedbackSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!recordingId || !reviewerId.trim() || feedbackStatus === "submitting") return;
+    setFeedbackStatus("submitting");
+    setFeedbackMessage("");
+    try {
+      const rawConfidence = Number(analysisResult?.final_diagnostic_decision?.confidence ?? analysisResult?.bridge?.confidence?.final_fused_confidence ?? 0);
+      const confidencePercent = rawConfidence <= 1 ? rawConfidence * 100 : rawConfidence;
+      const result = await api.submitFeedback({
+        case_id: recordingId,
+        ecg_id: String(analysisResult?.ecg_id || recordingId),
+        patient_id: String(analysisResult?.patient_id || recordingId),
+        clinician_id: reviewerId.trim(),
+        diagnosis_correctness: verdict,
+        clinician_primary_scp: correctedPrimary.trim().toUpperCase() || null,
+        clinician_secondary_scps: correctedSecondary.split(",").map(value => value.trim().toUpperCase()).filter(Boolean),
+        clinician_family: correctedFamily,
+        confidence_rating: confidenceRating,
+        bridge_explanation_rating: explanationRating,
+        retrieval_evaluations: Object.entries(retrievalRatings).map(([ecg_id, relevance]) => ({ ecg_id, relevance })),
+        general_comments: feedbackNotes.trim(),
+        classifier_version: String(analysisResult?.model_version || "current"),
+        family_head_version: "current",
+        retrieval_version: "SignalDB-current",
+        bridge_version: "Cordis-current",
+        faiss_version: "current",
+        signal_quality: Number(analysisResult?.signal_quality?.score ?? 1),
+        confidence_score: Math.max(0, Math.min(100, Math.round(confidencePercent))),
+        deployment_version: "CARDIOVAULT-current"
+      });
+      setFeedbackStatus("submitted");
+      setFeedbackMessage(`Feedback #${result.feedback_id} was saved and queued for independent review.`);
+      setFeedbackNotes("");
+    } catch (error: any) {
+      setFeedbackStatus("error");
+      setFeedbackMessage(error.message || "Feedback could not be saved.");
     }
   };
 
@@ -631,38 +721,34 @@ export default function App() {
     }
   };
 
-  const handleFeedbackSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!recordingId) return;
-
-    try {
-      await api.submitFeedback({
-        case_id: recordingId,
-        ecg_id: String(analysisResult?.ecg_id || recordingId),
-        patient_id: String(analysisResult?.patient_id || recordingId),
-        clinician_id: reviewerId,
-        diagnosis_correctness: verdict,
-        clinician_primary_scp: correctedPrimary.trim() || null,
-        clinician_secondary_scps: correctedSecondary.split(",").map(v => v.trim().toUpperCase()).filter(Boolean),
-        clinician_family: correctedFamily,
-        confidence_rating: confidenceRating,
-        bridge_explanation_rating: explanationRating,
-        retrieval_evaluations: Object.entries(retrievalRatings).map(([ecg_id, relevance]) => ({ ecg_id, relevance })),
-        general_comments: feedbackNotes,
-        classifier_version: "PTB-XL selected",
-        family_head_version: "hierarchical",
-        retrieval_version: "V7",
-        bridge_version: "V4",
-        faiss_version: "V7",
-        signal_quality: Number(analysisResult?.signal_quality?.score ?? 1),
-        confidence_score: Math.round(Number(analysisResult?.final_diagnostic_decision?.confidence || analysisResult?.bridge?.confidence?.final_fused_confidence || 0) * 100),
-        deployment_version: "final_version_optimized"
-      });
-      setFeedbackSubmitted(true);
-      setFeedbackNotes("");
-    } catch (err: any) {
-      alert(`Feedback submission failed: ${err.message}`);
+  const requestDeviceLocation = () => {
+    if (!navigator.geolocation) {
+      setLocationStatus("Location is not supported on this device. The offline directory remains available.");
+      return;
     }
+    setLocating(true);
+    setLocationStatus("Requesting device location…");
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        setDeviceLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          accuracy: position.coords.accuracy,
+        });
+        setLocationStatus(`Location available (accuracy ±${Math.round(position.coords.accuracy)} m).`);
+        setLocating(false);
+      },
+      error => {
+        const reason = error.code === error.PERMISSION_DENIED
+          ? "Location permission was denied."
+          : error.code === error.TIMEOUT
+            ? "Location request timed out."
+            : "The device could not determine its location.";
+        setLocationStatus(`${reason} The offline directory remains available.`);
+        setLocating(false);
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 },
+    );
   };
 
   const installPWA = () => {
@@ -701,6 +787,45 @@ export default function App() {
         </div>
       </div>)}
     </div>;
+  };
+
+  const rankedHospitals = CHENNAI_HOSPITALS
+    .map(hospital => ({
+      ...hospital,
+      distance: deviceLocation ? distanceKm(deviceLocation, hospital) : null,
+    }))
+    .sort((a, b) => a.distance === null || b.distance === null ? a.name.localeCompare(b.name) : a.distance - b.distance);
+  const selectedHospital = rankedHospitals.find(hospital => hospital.id === selectedHospitalId);
+  const referralFinding = analysisResult?.final_diagnostic_decision?.summary
+    || analysisResult?.final_diagnostic_decision?.decision_summary
+    || analysisResult?.bridge?.summary
+    || displayLabel(analysisResult?.final_diagnostic_decision?.primary_label || analysisResult?.bridge?.primary_label || "Not available");
+  const referralMessage = [
+    "CARDIOVAULT clinician referral",
+    `Hospital: ${selectedHospital?.name || "Not selected"}`,
+    `Patient reference: ${patientReference.trim() || "Not provided"}`,
+    `Age/Sex: ${patientAge.trim() || "Not stated"} / ${patientSex}`,
+    `History: ${clinicalHistory.trim().slice(0, 240) || "Not provided"}`,
+    `ECG decision-support summary: ${String(referralFinding || "Not available").slice(0, 260)}`,
+    deviceLocation ? `Location: ${deviceLocation.latitude.toFixed(5)}, ${deviceLocation.longitude.toFixed(5)}` : "Location: Not shared",
+    `Clinic callback: ${clinicCallback.trim() || "Not provided"}`,
+    "Please clinically reassess on arrival. This message is not a confirmed diagnosis.",
+  ].join("\n");
+  const normalizedSmsRecipient = smsRecipient.replace(/[^\d+]/g, "");
+  const referralReady = Boolean(selectedHospital && normalizedSmsRecipient && clinicalHistory.trim() && clinicCallback.trim() && referralConsent);
+
+  const copyReferralMessage = async () => {
+    try {
+      await navigator.clipboard.writeText(referralMessage);
+      setCopyStatus("Referral summary copied.");
+    } catch {
+      setCopyStatus("Copy was blocked by the browser. Select and copy the preview manually.");
+    }
+  };
+
+  const openSmsComposer = () => {
+    if (!referralReady) return;
+    window.location.href = `sms:${normalizedSmsRecipient}?body=${encodeURIComponent(referralMessage)}`;
   };
 
   return (
@@ -768,13 +893,13 @@ export default function App() {
       )}
 
       {/* Header Bar */}
-      <header className={`sticky top-0 z-40 border-b border-neutral-200/80 bg-white/95 backdrop-blur-md px-6 py-3 flex items-center ${view === "landing" ? "justify-end" : "justify-between"}`}>
+      {!isEcgExpanded && !isMapExpanded && <header className={`sticky top-0 z-40 border-b border-neutral-200/80 bg-white/95 backdrop-blur-md px-6 py-3 flex items-center ${view === "landing" ? "justify-end" : "justify-between"}`}>
         {view !== "landing" && <div className="flex items-center gap-3">
           <div className="bg-red-600 text-white rounded p-1.5 flex items-center justify-center shadow-md">
             <Activity className="size-5" />
           </div>
           <div>
-            <span className="font-bold tracking-wide text-base text-neutral-950">Clinical Decision Support System</span>
+            <span className="font-bold tracking-wide text-base text-neutral-950">CARDIOVAULT</span>
             <span className="text-xs text-neutral-500 ml-2 border-l border-neutral-300 pl-2">ECG Diagnosis</span>
           </div>
         </div>}
@@ -795,17 +920,16 @@ export default function App() {
             className="flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full bg-neutral-100 border border-neutral-200 hover:bg-neutral-200 transition"
           >
             <span className={`size-2 rounded-full ${healthStatus === "healthy" ? "bg-green-600 animate-pulse" : (healthStatus === "connecting" ? "bg-amber-500" : "bg-red-600")}`} />
-            <span className="text-neutral-600 capitalize font-medium">{healthStatus} runtime</span>
+            <span className="text-neutral-600 font-medium">RUNTIME CHECK</span>
           </button>
         </div>
-      </header>
+      </header>}
 
       {/* Health status dropdown overlay */}
       {showHealth && systemHealth && (
         <div className="absolute right-6 top-16 z-50 w-80 bg-white rounded-lg border border-neutral-200 shadow-xl p-4 text-xs">
           <h4 className="font-bold border-b border-neutral-100 pb-2 mb-2 flex items-center justify-between text-neutral-900">
             <span>Clinical ECG Pipeline Status</span>
-            <span className="text-neutral-400">Bridge / FAISS</span>
           </h4>
           <div className="space-y-1.5 text-neutral-600">
             <div className="flex justify-between"><span>FastAPI Status:</span><span className="font-bold text-green-600">Active</span></div>
@@ -829,11 +953,8 @@ export default function App() {
               className="flex-1 max-w-4xl mx-auto flex flex-col justify-center px-6 py-12"
             >
               <h1 className="mb-3 text-center text-2xl font-extrabold tracking-tight text-neutral-950 sm:text-3xl">
-                Clinical Decision Support System - ECG Decision Support
+                CARDIOVAULT
               </h1>
-              <p className="mx-auto mb-7 max-w-3xl text-center text-[11px] leading-relaxed text-neutral-500 sm:text-xs">
-                The system combines ECG classification, FAISS retrieval, rhythm and measurements into a traceable consensus with citations, while the clinical assistant provides contextual explanations.
-              </p>
 
               {/* Acquisition Card */}
               <div className="bg-white border border-neutral-200 shadow-xl rounded-xl p-8 max-w-xl mx-auto w-full relative overflow-hidden">
@@ -983,7 +1104,7 @@ export default function App() {
                       <span>Ingest New ECG</span>
                     </button>
                   </div>
-                  <span className="text-[10px] text-neutral-500 font-mono">{systemHealth?.configured_device || "CPU"} · Bridge / FAISS</span>
+                  <span className="text-[10px] text-neutral-500 font-mono">{systemHealth?.configured_device || "CPU"}</span>
               </aside>
 
               {/* Col 2, Row 1: ECG INPUT / LIVE ECG REGION */}
@@ -1111,7 +1232,7 @@ export default function App() {
                 {/* Retrieval output */}
                 <div className="p-4 flex flex-col justify-between overflow-hidden">
                   <div>
-                    <h4 className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider mb-1.5">FAISS ECG Retrieval</h4>
+                    <h4 className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider mb-1.5">SignalDB</h4>
                     <div className="text-xs text-neutral-700 truncate">
                       Matched: <span className="font-bold text-neutral-900">{analysisResult?.retrieval?.raw_neighbors?.length || 0} similar cases</span>
                     </div>
@@ -1192,8 +1313,7 @@ export default function App() {
                   {/* FAISS Nearest Neighbors comparison matches */}
                   {analysisResult?.retrieval?.raw_neighbors && (
                     <div className="border-t border-neutral-100 pt-3">
-                      <div className="flex items-center justify-between mb-2">
-                        <h4 className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">FAISS Retrieved Neighbors</h4>
+                      <div className="flex items-center justify-end mb-2">
                         <label className="text-[10px] text-neutral-500">Show top <select value={retrievalDisplayCount} onChange={e => setRetrievalDisplayCount(Number(e.target.value))} className="ml-1 border rounded px-2 py-1 bg-white text-neutral-800"><option value={5}>5</option><option value={10}>10</option><option value={20}>20</option></select></label>
                       </div>
                       <div className="space-y-3">
@@ -1302,7 +1422,7 @@ export default function App() {
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="text-xs font-bold text-neutral-500 uppercase tracking-wider flex items-center gap-1.5">
                     <MessageSquare className="size-4 text-neutral-400" />
-                    <span>Gemma Clinical Q&A</span>
+                    <span>Cordis</span>
                   </h3>
                   <span className="text-[10px] text-neutral-400">Advisory-only responses grounded on clinical guideline sources</span>
                 </div>
@@ -1387,30 +1507,209 @@ export default function App() {
                 </div>
               </section>
 
-              {/* Final section: detailed append-only clinician feedback */}
-              <section id="feedback" className="scroll-mt-32 bg-white border border-neutral-200 rounded-xl shadow-sm p-6">
-                <div className="border-b border-neutral-100 pb-3 mb-5">
-                  <h3 className="text-xs font-bold text-neutral-600 uppercase tracking-wider">Clinician Audit and Learning Feedback</h3>
-                  <p className="text-xs text-neutral-500 mt-1">Stored append-only for adjudication and future model evaluation. It never changes the active system consensus or FAISS index.</p>
+              <section id="referral" className="scroll-mt-32 bg-white border border-neutral-200 rounded-xl shadow-sm p-6">
+                <div className="flex flex-col gap-4 border-b border-neutral-100 pb-5 mb-5 md:flex-row md:items-start md:justify-between">
+                  <div>
+                    <h3 className="flex items-center gap-2 text-sm font-black text-neutral-900 uppercase tracking-wider">
+                      <MapPin className="size-5 text-red-600" />
+                      Emergency Referral
+                    </h3>
+                    <p className="mt-1 max-w-3xl text-xs leading-relaxed text-neutral-500">
+                      Find a nearby hospital from the offline Chennai directory and prepare a clinician-reviewed referral SMS. No message is sent automatically.
+                    </p>
+                  </div>
+                  <a href="tel:112" className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-red-600 px-4 py-2.5 text-xs font-black text-white hover:bg-red-700">
+                    <Phone className="size-4" /> Call 112
+                  </a>
                 </div>
-                {feedbackSubmitted ? <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-sm text-green-700">Feedback recorded and queued for independent review.</div> : (
-                  <form onSubmit={handleFeedbackSubmit} className="space-y-5">
-                    <div className="grid md:grid-cols-3 gap-4">
-                      <label className="text-xs font-semibold">Diagnostic correctness<select value={verdict} onChange={e => setVerdict(e.target.value)} className="mt-1 w-full border rounded-lg p-2 font-normal"><option>Correct</option><option>Partially Correct</option><option>Incorrect</option><option>Cannot Determine</option><option>Poor ECG Quality</option></select></label>
-                      <label className="text-xs font-semibold">Confidence calibration<select value={confidenceRating} onChange={e => setConfidenceRating(e.target.value)} className="mt-1 w-full border rounded-lg p-2 font-normal"><option>Too High</option><option>Appropriate</option><option>Too Low</option></select></label>
-                      <label className="text-xs font-semibold">Bridge explanation quality<select value={explanationRating} onChange={e => setExplanationRating(e.target.value)} className="mt-1 w-full border rounded-lg p-2 font-normal"><option>Very Useful</option><option>Useful</option><option>Neutral</option><option>Misleading</option><option>Incorrect</option></select></label>
-                      <label className="text-xs font-semibold">Corrected primary SCP label<input value={correctedPrimary} onChange={e => setCorrectedPrimary(e.target.value.toUpperCase())} placeholder="e.g. IRBBB" className="mt-1 w-full border rounded-lg p-2 font-normal" /></label>
-                      <label className="text-xs font-semibold">Other valid SCP labels<input value={correctedSecondary} onChange={e => setCorrectedSecondary(e.target.value)} placeholder="Comma-separated labels" className="mt-1 w-full border rounded-lg p-2 font-normal" /></label>
-                      <label className="text-xs font-semibold">Corrected clinical family<select value={correctedFamily} onChange={e => setCorrectedFamily(e.target.value)} className="mt-1 w-full border rounded-lg p-2 font-normal">{["Normal","Rhythm","Conduction","Infarction","Hypertrophy","Repolarization","Ischemia","Pacing","Other"].map(v => <option key={v}>{v}</option>)}</select></label>
+
+                <div className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
+                  <div className="space-y-4">
+                    <div className="rounded-xl border border-neutral-200 bg-neutral-50 p-4">
+                      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                        <div>
+                          <div className="text-xs font-bold text-neutral-900">Device location</div>
+                          <div className="mt-0.5 text-[10px] text-neutral-500">{locationStatus}</div>
+                        </div>
+                        <button type="button" onClick={requestDeviceLocation} disabled={locating} className="inline-flex items-center justify-center gap-2 rounded-lg bg-neutral-900 px-4 py-2 text-xs font-bold text-white hover:bg-neutral-800 disabled:opacity-50">
+                          {locating ? <RefreshCw className="size-4 animate-spin" /> : <Navigation className="size-4" />}
+                          {locating ? "Locating…" : "Use My Location"}
+                        </button>
+                      </div>
+                      <p className="mt-3 text-[10px] leading-relaxed text-amber-700">
+                        GPS can work without internet when supported by the device. Confirm the displayed accuracy and hospital details before travel.
+                      </p>
                     </div>
+
+                    <label className="flex items-start gap-2 rounded-xl border border-blue-200 bg-blue-50 p-3 text-[10px] leading-relaxed text-blue-900">
+                      <input type="checkbox" checked={routingEnabled} onChange={e => setRoutingEnabled(e.target.checked)} className="mt-0.5 size-4 accent-red-600" />
+                      <span><strong>Enable online streets and routes.</strong> Street tiles are loaded from OpenStreetMap. When a hospital is selected, your approximate device coordinates and the hospital coordinates are sent to the OSRM routing service to calculate driving distance and estimated time.</span>
+                    </label>
+
+                    <HospitalStreetMap
+                      hospitals={CHENNAI_HOSPITALS}
+                      location={deviceLocation}
+                      selectedHospitalId={selectedHospitalId}
+                      routingEnabled={routingEnabled}
+                      onSelectHospital={hospital => {
+                        setSelectedHospitalId(hospital.id);
+                        setSmsRecipient(hospital.phone);
+                        setReferralConsent(false);
+                      }}
+                      onExpandedChange={setIsMapExpanded}
+                    />
+
                     <div>
-                      <h4 className="text-xs font-bold mb-2">Retrieved-neighbor relevance</h4>
-                      <div className="grid md:grid-cols-2 gap-2">{(analysisResult?.retrieval?.matches || analysisResult?.retrieval_matches || []).slice(0,5).map((match:any, index:number) => { const id=String(match.ecg_id ?? match.faiss_row ?? index); return <label key={id} className="flex items-center justify-between border rounded-lg p-2 text-xs"><span>Rank {index+1} · ECG {id}</span><select value={retrievalRatings[id] || "Relevant"} onChange={e => setRetrievalRatings(p => ({...p,[id]:e.target.value}))} className="border rounded p-1"><option>Highly Relevant</option><option>Relevant</option><option>Somewhat Relevant</option><option>Not Relevant</option><option>Misleading</option></select></label>; })}</div>
+                      <div className="mb-2 flex items-end justify-between gap-3">
+                        <div>
+                          <h4 className="text-xs font-bold text-neutral-900">Nearby Chennai hospitals</h4>
+                          <p className="text-[10px] text-neutral-500">{CHENNAI_HOSPITALS.length} contacts from the supplied lists dated 3 January and 7 April 2025.</p>
+                        </div>
+                        <span className="text-[10px] font-semibold text-neutral-400">{deviceLocation ? "Sorted by straight-line distance" : "Sorted alphabetically"}</span>
+                      </div>
+                      <div className="max-h-[430px] space-y-2 overflow-y-auto pr-1">
+                        {rankedHospitals.map(hospital => (
+                          <button
+                            type="button"
+                            key={hospital.id}
+                            onClick={() => {
+                              setSelectedHospitalId(hospital.id);
+                              setSmsRecipient(hospital.phone);
+                              setReferralConsent(false);
+                            }}
+                            className={`w-full rounded-xl border p-3 text-left transition ${selectedHospitalId === hospital.id ? "border-red-400 bg-red-50 ring-1 ring-red-200" : "border-neutral-200 bg-white hover:border-neutral-300 hover:bg-neutral-50"}`}
+                          >
+                            <div className="flex items-start justify-between gap-3">
+                              <div className="min-w-0">
+                                <div className="text-xs font-bold text-neutral-900">{hospital.name}</div>
+                                <div className="mt-1 text-[10px] leading-relaxed text-neutral-500">{hospital.address}</div>
+                                <div className="mt-1 text-[10px] font-semibold text-neutral-600">{hospital.phone} · {hospital.category}</div>
+                              </div>
+                              {hospital.distance !== null && <span className="shrink-0 rounded-full bg-white px-2 py-1 text-[10px] font-black text-red-700 shadow-sm">{hospital.distance.toFixed(1)} km</span>}
+                            </div>
+                          </button>
+                        ))}
+                      </div>
                     </div>
-                    <div className="grid md:grid-cols-[220px_1fr] gap-4"><label className="text-xs font-semibold">Clinician identifier<input value={reviewerId} onChange={e => setReviewerId(e.target.value)} className="mt-1 w-full border rounded-lg p-2 font-normal" /></label><label className="text-xs font-semibold">Corrections, reasoning, citation, language, window or measurement notes<textarea value={feedbackNotes} onChange={e => setFeedbackNotes(e.target.value)} className="mt-1 w-full border rounded-lg p-2 min-h-24 font-normal" placeholder="Describe missed labels/windows, incorrect measurements, retrieval relevance, citation issues, or explanation quality." /></label></div>
-                    <button type="submit" className="w-full bg-neutral-900 text-white rounded-lg py-3 text-sm font-bold hover:bg-neutral-800">Submit Feedback for Adjudication</button>
-                  </form>
-                )}
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="rounded-xl border border-neutral-200 p-4">
+                      <h4 className="text-xs font-bold text-neutral-900">Selected destination</h4>
+                      {selectedHospital ? (
+                        <div className="mt-2">
+                          <div className="text-sm font-black text-neutral-900">{selectedHospital.name}</div>
+                          <div className="mt-1 text-xs text-neutral-500">{selectedHospital.address}</div>
+                          <div className="mt-3 flex flex-wrap gap-2">
+                            <a href={`tel:${selectedHospital.phone.replace(/[^\d+]/g, "")}`} className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-300 px-3 py-2 text-xs font-bold text-neutral-800 hover:bg-neutral-50"><Phone className="size-3.5" /> Call hospital</a>
+                            <a href={`geo:${selectedHospital.latitude},${selectedHospital.longitude}?q=${selectedHospital.latitude},${selectedHospital.longitude}(${encodeURIComponent(selectedHospital.name)})`} className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-300 px-3 py-2 text-xs font-bold text-neutral-800 hover:bg-neutral-50"><MapPin className="size-3.5" /> Open location</a>
+                          </div>
+                        </div>
+                      ) : <p className="mt-2 text-xs text-neutral-500">Select a hospital from the offline directory.</p>}
+                    </div>
+
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      <label className="text-xs font-semibold text-neutral-700">Patient reference or initials
+                        <input value={patientReference} onChange={e => setPatientReference(e.target.value)} placeholder="Avoid full name when possible" className="mt-1 w-full rounded-lg border border-neutral-300 px-3 py-2 font-normal" />
+                      </label>
+                      <div className="grid grid-cols-2 gap-2">
+                        <label className="text-xs font-semibold text-neutral-700">Age
+                          <input type="number" min="0" max="130" value={patientAge} onChange={e => setPatientAge(e.target.value)} placeholder="Years" className="mt-1 w-full rounded-lg border border-neutral-300 px-3 py-2 font-normal" />
+                        </label>
+                        <label className="text-xs font-semibold text-neutral-700">Sex
+                          <select value={patientSex} onChange={e => setPatientSex(e.target.value)} className="mt-1 w-full rounded-lg border border-neutral-300 px-3 py-2 font-normal"><option>Not stated</option><option>Female</option><option>Male</option><option>Other</option></select>
+                        </label>
+                      </div>
+                      <label className="text-xs font-semibold text-neutral-700 sm:col-span-2">Basic history and current symptoms <span className="text-red-600">*</span>
+                        <textarea value={clinicalHistory} onChange={e => setClinicalHistory(e.target.value)} maxLength={600} placeholder="Example: chest pain for 2 hours, breathlessness, hypertension; relevant medicines or allergies." className="mt-1 min-h-24 w-full rounded-lg border border-neutral-300 px-3 py-2 font-normal" />
+                      </label>
+                      <label className="text-xs font-semibold text-neutral-700">Clinic callback number <span className="text-red-600">*</span>
+                        <input type="tel" value={clinicCallback} onChange={e => setClinicCallback(e.target.value)} placeholder="Number hospital can call" className="mt-1 w-full rounded-lg border border-neutral-300 px-3 py-2 font-normal" />
+                      </label>
+                      <label className="text-xs font-semibold text-neutral-700">Verified referral SMS number <span className="text-red-600">*</span>
+                        <input type="tel" value={smsRecipient} onChange={e => { setSmsRecipient(e.target.value); setReferralConsent(false); }} placeholder="Confirm an SMS-capable hospital number" className="mt-1 w-full rounded-lg border border-neutral-300 px-3 py-2 font-normal" />
+                      </label>
+                    </div>
+
+                    <div>
+                      <div className="mb-1 flex items-center justify-between gap-2">
+                        <h4 className="text-xs font-bold text-neutral-900">SMS preview</h4>
+                        <button type="button" onClick={copyReferralMessage} className="inline-flex items-center gap-1 text-[10px] font-bold text-neutral-600 hover:text-neutral-900"><Copy className="size-3" /> Copy</button>
+                      </div>
+                      <pre className="max-h-64 overflow-y-auto whitespace-pre-wrap rounded-xl border border-neutral-200 bg-neutral-950 p-4 text-[11px] leading-relaxed text-neutral-100">{referralMessage}</pre>
+                      {copyStatus && <p className="mt-1 text-[10px] text-neutral-500">{copyStatus}</p>}
+                    </div>
+
+                    <label className="flex items-start gap-2 rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs leading-relaxed text-amber-900">
+                      <input type="checkbox" checked={referralConsent} onChange={e => setReferralConsent(e.target.checked)} className="mt-0.5 size-4 accent-red-600" />
+                      <span>I am the attending clinician. I verified the destination and SMS-capable number, reviewed the minimum necessary patient information, obtained permission to share it, and decided to refer this patient.</span>
+                    </label>
+
+                    <button type="button" onClick={openSmsComposer} disabled={!referralReady} className="flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 py-3 text-sm font-black text-white hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-neutral-300">
+                      <ShieldCheck className="size-4" /> Open SMS for clinician confirmation
+                    </button>
+                    {!referralReady && <p className="text-[10px] text-neutral-500">Select a hospital, verify the SMS number, add history and callback information, then confirm consent. Your device performs the final send.</p>}
+                    <p className="text-[10px] leading-relaxed text-neutral-400">Hospital phone numbers in the supplied list may be landlines and may not receive SMS. Verify a dedicated referral or emergency mobile number with the hospital before use. Straight-line distance is not travel time.</p>
+                  </div>
+                </div>
+              </section>
+
+              <section id="feedback" className="scroll-mt-32 rounded-xl border border-neutral-200 bg-white p-6 shadow-sm">
+                <div className="mb-5 border-b border-neutral-100 pb-3">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-neutral-600">Clinician Audit and Learning Feedback</h3>
+                  <p className="mt-1 text-xs text-neutral-500">Saved to the clinician feedback database and queued for independent review. Feedback does not change the current case result or SignalDB.</p>
+                </div>
+
+                {feedbackStatus === "submitted" && <div className="mb-5 rounded-lg border border-green-200 bg-green-50 p-4 text-sm font-semibold text-green-800">{feedbackMessage}</div>}
+                {feedbackStatus === "error" && <div className="mb-5 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800">Feedback submission failed: {feedbackMessage}</div>}
+
+                <form onSubmit={handleFeedbackSubmit} className="space-y-5">
+                  <div className="grid gap-4 md:grid-cols-3">
+                    <label className="text-xs font-semibold">Diagnostic correctness
+                      <select value={verdict} onChange={e => setVerdict(e.target.value)} className="mt-1 w-full rounded-lg border border-neutral-300 p-2 font-normal"><option>Correct</option><option>Partially Correct</option><option>Incorrect</option><option>Cannot Determine</option><option>Poor ECG Quality</option></select>
+                    </label>
+                    <label className="text-xs font-semibold">Confidence calibration
+                      <select value={confidenceRating} onChange={e => setConfidenceRating(e.target.value)} className="mt-1 w-full rounded-lg border border-neutral-300 p-2 font-normal"><option>Too High</option><option>Appropriate</option><option>Too Low</option></select>
+                    </label>
+                    <label className="text-xs font-semibold">Cordis explanation quality
+                      <select value={explanationRating} onChange={e => setExplanationRating(e.target.value)} className="mt-1 w-full rounded-lg border border-neutral-300 p-2 font-normal"><option>Very Useful</option><option>Useful</option><option>Neutral</option><option>Misleading</option><option>Incorrect</option></select>
+                    </label>
+                    <label className="text-xs font-semibold">Corrected primary SCP label
+                      <input value={correctedPrimary} onChange={e => setCorrectedPrimary(e.target.value.toUpperCase())} placeholder="e.g. IRBBB" className="mt-1 w-full rounded-lg border border-neutral-300 p-2 font-normal" />
+                    </label>
+                    <label className="text-xs font-semibold">Other valid SCP labels
+                      <input value={correctedSecondary} onChange={e => setCorrectedSecondary(e.target.value)} placeholder="Comma-separated labels" className="mt-1 w-full rounded-lg border border-neutral-300 p-2 font-normal" />
+                    </label>
+                    <label className="text-xs font-semibold">Corrected clinical family
+                      <select value={correctedFamily} onChange={e => setCorrectedFamily(e.target.value)} className="mt-1 w-full rounded-lg border border-neutral-300 p-2 font-normal">{["Normal", "Rhythm", "Conduction", "Infarction", "Hypertrophy", "Repolarization", "Ischemia", "Pacing", "Other"].map(value => <option key={value}>{value}</option>)}</select>
+                    </label>
+                  </div>
+
+                  <div>
+                    <h4 className="mb-2 text-xs font-bold">Similar-case relevance</h4>
+                    <div className="grid gap-2 md:grid-cols-2">
+                      {(analysisResult?.retrieval?.matches || analysisResult?.retrieval_matches || []).slice(0, 5).map((match: any, index: number) => {
+                        const id = String(match.ecg_id ?? match.retrieved_ecg_id ?? match.faiss_row ?? index);
+                        return <label key={id} className="flex items-center justify-between rounded-lg border border-neutral-200 p-2 text-xs"><span>Rank {index + 1} · ECG {id}</span><select value={retrievalRatings[id] || "Relevant"} onChange={e => setRetrievalRatings(previous => ({ ...previous, [id]: e.target.value }))} className="rounded border border-neutral-300 p-1"><option>Highly Relevant</option><option>Relevant</option><option>Somewhat Relevant</option><option>Not Relevant</option><option>Misleading</option></select></label>;
+                      })}
+                    </div>
+                    {(analysisResult?.retrieval?.matches || analysisResult?.retrieval_matches || []).length === 0 && <p className="text-xs text-neutral-500">No similar cases are available to rate for this recording.</p>}
+                  </div>
+
+                  <div className="grid gap-4 md:grid-cols-[220px_1fr]">
+                    <label className="text-xs font-semibold">Clinician identifier <span className="text-red-600">*</span>
+                      <input required value={reviewerId} onChange={e => setReviewerId(e.target.value)} placeholder="Staff ID" className="mt-1 w-full rounded-lg border border-neutral-300 p-2 font-normal" />
+                    </label>
+                    <label className="text-xs font-semibold">Corrections, reasoning, citation, language, window or measurement notes
+                      <textarea value={feedbackNotes} onChange={e => setFeedbackNotes(e.target.value)} className="mt-1 min-h-24 w-full rounded-lg border border-neutral-300 p-2 font-normal" placeholder="Describe missed labels, incorrect measurements, similar-case relevance, citation issues or explanation quality." />
+                    </label>
+                  </div>
+
+                  <button type="submit" disabled={!recordingId || !reviewerId.trim() || feedbackStatus === "submitting"} className="w-full rounded-lg bg-neutral-900 py-3 text-sm font-bold text-white hover:bg-neutral-800 disabled:cursor-not-allowed disabled:bg-neutral-300">
+                    {feedbackStatus === "submitting" ? "Saving feedback…" : "Submit Feedback for Adjudication"}
+                  </button>
+                  {!recordingId && <p className="text-center text-xs text-neutral-500">Analyse an ECG before submitting feedback.</p>}
+                </form>
               </section>
 
               {/* Section-aware assistant: shares the active case chat state. */}
